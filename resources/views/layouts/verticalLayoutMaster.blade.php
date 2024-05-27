@@ -9,9 +9,7 @@ data-asset-path="{{ asset('/')}}">
   <!-- END: Header-->
 
   <!-- BEGIN: Main Menu-->
-  @if((isset($configData['showMenu']) && $configData['showMenu'] === true))
-  @include('panels.sidebar')
-  @endif
+
   <!-- END: Main Menu-->
 
   <!-- BEGIN: Content-->

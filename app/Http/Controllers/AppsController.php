@@ -47,10 +47,27 @@ class AppsController extends Controller
     }
 
     // User List Page
-    public function user_list()
+    // public function user_list()
+    // {
+    //     // $pageConfigs = ['pageHeader' => false];
+    //     $pageConfigs = [
+    //         'pageHeader' => false,
+    //         'contentLayout' => "content-left-sidebar",
+    //         'pageClass' => 'email-application',
+    //     ];
+    //     return view('/content/apps/user/app-user-list', ['pageConfigs' => $pageConfigs]);
+    // }
+
+    // User List Page
+    public function contact_list()
     {
-        $pageConfigs = ['pageHeader' => false];
-        return view('/content/apps/user/app-user-list', ['pageConfigs' => $pageConfigs]);
+        // $pageConfigs = ['pageHeader' => false];
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
+        return view('/content/apps/user/app-contact-list', ['pageConfigs' => $pageConfigs]);
     }
 
     // User Account Page

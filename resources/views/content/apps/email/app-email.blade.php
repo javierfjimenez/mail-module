@@ -23,7 +23,7 @@
 
 <!-- Sidebar Area -->
 @section('content-sidebar')
-@include('content/apps/email/app-email-sidebar')
+@include('content/apps/menu-sidebar/app-email-sidebar')
 @endsection
 
 @section('content')

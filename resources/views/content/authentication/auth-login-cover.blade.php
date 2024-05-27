@@ -58,46 +58,46 @@ $configData = Helper::applClasses();
     <!-- Login-->
     <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
       <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-        <h2 class="card-title fw-bold mb-1">Welcome to Vuexy! 👋</h2>
-        <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
-        <form class="auth-login-form mt-2" action="/" method="GET">
+        <h2 class="card-title fw-bold mb-1">Bienvenido! 👋</h2>
+        <p class="card-text mb-2">Inicia sesión e inicia una jornada productiva.</p>
+        <form class="auth-login-form mt-2" action="{{url('authenticate')}}" method="GET">
           <div class="mb-1">
-            <label class="form-label" for="login-email">Email</label>
-            <input class="form-control" id="login-email" type="text" name="login-email" placeholder="john@example.com" aria-describedby="login-email" autofocus="" tabindex="1" />
+            <label class="form-label" for="email">Correo</label>
+            <input class="form-control" id="email" type="text" name="email" placeholder="john@example.com" aria-describedby="login-email" autofocus="" tabindex="1" />
           </div>
           <div class="mb-1">
             <div class="d-flex justify-content-between">
-              <label class="form-label" for="login-password">Password</label>
+              <label class="form-label" for="password">Contraseña</label>
               <a href="{{url("auth/forgot-password-cover")}}">
-                <small>Forgot Password?</small>
+                <small>Olvidaste Contraseña?</small>
               </a>
             </div>
             <div class="input-group input-group-merge form-password-toggle">
-              <input class="form-control form-control-merge" id="login-password" type="password" name="login-password" placeholder="············" aria-describedby="login-password" tabindex="2" />
+              <input class="form-control form-control-merge" id="password" type="password" name="password" placeholder="············" aria-describedby="login-password" tabindex="2" />
               <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
             </div>
           </div>
           <div class="mb-1">
             <div class="form-check">
               <input class="form-check-input" id="remember-me" type="checkbox" tabindex="3" />
-              <label class="form-check-label" for="remember-me"> Remember Me</label>
+              <label class="form-check-label" for="remember-me"> Recordar Usuario</label>
             </div>
           </div>
-          <button class="btn btn-primary w-100" tabindex="4">Sign in</button>
+          <button class="btn btn-primary w-100" tabindex="4">Iniciar sesión</button>
         </form>
-        <p class="text-center mt-2">
+        <!-- <p class="text-center mt-2">
           <span>New on our platform?</span>
           <a href="{{url('auth/register-cover')}}"><span>&nbsp;Create an account</span></a>
-        </p>
-        <div class="divider my-2">
+        </p> -->
+        <!-- <div class="divider my-2">
           <div class="divider-text">or</div>
-        </div>
-        <div class="auth-footer-btn d-flex justify-content-center">
+        </div> -->
+        <!-- <div class="auth-footer-btn d-flex justify-content-center">
           <a class="btn btn-facebook" href="#"><i data-feather="facebook"></i></a>
           <a class="btn btn-twitter white" href="#"><i data-feather="twitter"></i></a>
           <a class="btn btn-google" href="#"><i data-feather="mail"></i></a>
           <a class="btn btn-github" href="#"><i data-feather="github"></i></a>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- /Login-->

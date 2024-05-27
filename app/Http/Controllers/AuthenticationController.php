@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use \Firebase\JWT\JWT;
+use Illuminate\Http\Response;
 
 class AuthenticationController extends Controller
 {
+
+
     // Login basic
     public function login_basic()
     {
@@ -14,6 +19,41 @@ class AuthenticationController extends Controller
         return view('/content/authentication/auth-login-basic', ['pageConfigs' => $pageConfigs]);
     }
 
+    /**
+     * Handle an authentication attempt.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('/');
+        }
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * 
+     */
+    public function destroy()
+    {
+        Auth::logout();
+
+        return redirect('/');
+    }
     // Login Cover
     public function login_cover()
     {
@@ -108,5 +148,29 @@ class AuthenticationController extends Controller
         $pageConfigs = ['blankPage' => true];
 
         return view('/content/authentication/auth-register-multisteps', ['pageConfigs' => $pageConfigs]);
+    }
+
+        /**
+     * Create CKBox JWT token.
+     */
+    public function token(): Response
+    {
+        $environmentId = env('CKBOX_ENVIRONMENT_ID');
+        $accessKey = env('CKBOX_ACCESS_KEY');
+
+        $payload = [
+            'aud' => $environmentId,
+            'iat' => time(),
+            'sub' => 'unique-user-id', // Unique user ID in your application
+            'auth' => [
+                'ckbox' => [
+                    'role' => 'superadmin',
+                ]
+            ]
+        ];
+
+        $jwtToken = JWT::encode($payload, $accessKey, 'HS256');
+
+        return new Response($jwtToken);
     }
 }

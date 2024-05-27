@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AppsController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\ComponentsController;
@@ -28,42 +29,55 @@ use App\Http\Controllers\ChartsController;
 */
 
 // Main Page Route
-Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
-
+// ->middleware('auth')
+Route::get('login', [AuthenticationController::class, 'login_cover'])->name('login');
+Route::get('authenticate', [AuthenticationController::class, 'authenticate'])->name('authenticate');
 
 /* Route Dashboards */
-Route::group(['prefix' => 'dashboard'], function () {
-    Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
-    Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
+// Route::group(['prefix' => 'dashboard'], function () {
+// Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
+//     Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
+// });
+/* Route Dashboards */
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [AppsController::class, 'emailApp'])->name('app-email');
+    Route::get('users', [UserController::class, 'index'])->name('index');
+    Route::post('users/store', [UserController::class, 'userStore'])->name('userStore');
+    Route::post('contact/store', [UserController::class, 'contactStore'])->name('contactStore');
+    Route::get('contacts', [UserController::class, 'contactList'])->name('contactList');
+    Route::post('group/store', [UserController::class, 'groupStore'])->name('groupStore');
+    Route::get('groups', [UserController::class, 'groupList'])->name('groupList');
+    Route::get('logout', [AuthenticationController::class, 'destroy']);
+    Route::get('/ckbox/token', [AuthenticationController::class, 'token'])->name('ckbox_token');
+
 });
-/* Route Dashboards */
-
 /* Route Apps */
-Route::group(['prefix' => 'app'], function () {
-    Route::get('email', [AppsController::class, 'emailApp'])->name('app-email');
-    Route::get('chat', [AppsController::class, 'chatApp'])->name('app-chat');
-    Route::get('todo', [AppsController::class, 'todoApp'])->name('app-todo');
-    Route::get('calendar', [AppsController::class, 'calendarApp'])->name('app-calendar');
-    Route::get('kanban', [AppsController::class, 'kanbanApp'])->name('app-kanban');
-    Route::get('invoice/list', [AppsController::class, 'invoice_list'])->name('app-invoice-list');
-    Route::get('invoice/preview', [AppsController::class, 'invoice_preview'])->name('app-invoice-preview');
-    Route::get('invoice/edit', [AppsController::class, 'invoice_edit'])->name('app-invoice-edit');
-    Route::get('invoice/add', [AppsController::class, 'invoice_add'])->name('app-invoice-add');
-    Route::get('invoice/print', [AppsController::class, 'invoice_print'])->name('app-invoice-print');
-    Route::get('ecommerce/shop', [AppsController::class, 'ecommerce_shop'])->name('app-ecommerce-shop');
-    Route::get('ecommerce/details', [AppsController::class, 'ecommerce_details'])->name('app-ecommerce-details');
-    Route::get('ecommerce/wishlist', [AppsController::class, 'ecommerce_wishlist'])->name('app-ecommerce-wishlist');
-    Route::get('ecommerce/checkout', [AppsController::class, 'ecommerce_checkout'])->name('app-ecommerce-checkout');
-    Route::get('file-manager', [AppsController::class, 'file_manager'])->name('app-file-manager');
-    Route::get('access-roles', [AppsController::class, 'access_roles'])->name('app-access-roles');
-    Route::get('access-permission', [AppsController::class, 'access_permission'])->name('app-access-permission');
-    Route::get('user/list', [AppsController::class, 'user_list'])->name('app-user-list');
-    Route::get('user/view/account', [AppsController::class, 'user_view_account'])->name('app-user-view-account');
-    Route::get('user/view/security', [AppsController::class, 'user_view_security'])->name('app-user-view-security');
-    Route::get('user/view/billing', [AppsController::class, 'user_view_billing'])->name('app-user-view-billing');
-    Route::get('user/view/notifications', [AppsController::class, 'user_view_notifications'])->name('app-user-view-notifications');
-    Route::get('user/view/connections', [AppsController::class, 'user_view_connections'])->name('app-user-view-connections');
-});
+// Route::group(['prefix' => 'app'], function () {
+//     // Route::get('email', [AppsController::class, 'emailApp'])->name('app-email');
+//     Route::get('chat', [AppsController::class, 'chatApp'])->name('app-chat');
+//     Route::get('todo', [AppsController::class, 'todoApp'])->name('app-todo');
+//     Route::get('calendar', [AppsController::class, 'calendarApp'])->name('app-calendar');
+//     Route::get('kanban', [AppsController::class, 'kanbanApp'])->name('app-kanban');
+//     Route::get('invoice/list', [AppsController::class, 'invoice_list'])->name('app-invoice-list');
+//     Route::get('invoice/preview', [AppsController::class, 'invoice_preview'])->name('app-invoice-preview');
+//     Route::get('invoice/edit', [AppsController::class, 'invoice_edit'])->name('app-invoice-edit');
+//     Route::get('invoice/add', [AppsController::class, 'invoice_add'])->name('app-invoice-add');
+//     Route::get('invoice/print', [AppsController::class, 'invoice_print'])->name('app-invoice-print');
+//     Route::get('ecommerce/shop', [AppsController::class, 'ecommerce_shop'])->name('app-ecommerce-shop');
+//     Route::get('ecommerce/details', [AppsController::class, 'ecommerce_details'])->name('app-ecommerce-details');
+//     Route::get('ecommerce/wishlist', [AppsController::class, 'ecommerce_wishlist'])->name('app-ecommerce-wishlist');
+//     Route::get('ecommerce/checkout', [AppsController::class, 'ecommerce_checkout'])->name('app-ecommerce-checkout');
+//     Route::get('file-manager', [AppsController::class, 'file_manager'])->name('app-file-manager');
+//     Route::get('access-roles', [AppsController::class, 'access_roles'])->name('app-access-roles');
+//     // Route::get('access-permission', [AppsController::class, 'access_permission'])->name('app-access-permission');
+//     // Route::get('user/list', [AppsController::class, 'user_list'])->name('app-user-list');
+//     // Route::get('contact/list', [AppsController::class, 'contact_list'])->name('app-contact-list');
+//     Route::get('user/view/account', [AppsController::class, 'user_view_account'])->name('app-user-view-account');
+//     Route::get('user/view/security', [AppsController::class, 'user_view_security'])->name('app-user-view-security');
+//     Route::get('user/view/billing', [AppsController::class, 'user_view_billing'])->name('app-user-view-billing');
+//     Route::get('user/view/notifications', [AppsController::class, 'user_view_notifications'])->name('app-user-view-notifications');
+//     Route::get('user/view/connections', [AppsController::class, 'user_view_connections'])->name('app-user-view-connections');
+// })->middleware('auth');
 /* Route Apps */
 
 /* Route UI */
@@ -239,3 +253,12 @@ Route::get('/maps/leaflet', [ChartsController::class, 'maps_leaflet'])->name('ma
 // locale Route
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
