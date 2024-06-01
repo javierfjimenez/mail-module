@@ -8,28 +8,27 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('email_template', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->integer('type');
+            $table->longText('template');
             $table->integer('status')->default(1);
-            $table->bigInteger('group_id')->unsigned()->index()->nullable();
             $table->timestamps();
-
-            $table->foreign('group_id')->references('id')->on('groups');
-
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('email_template');
     }
 };

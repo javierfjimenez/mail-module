@@ -13,7 +13,9 @@
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
+
 @endsection
+
 
 @section('page-style')
 {{-- Page Css files --}}
@@ -22,6 +24,7 @@
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-quill-editor.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
+{{-- CKEditor CDN --}}
 @endsection
 <!-- Sidebar Area -->
 @section('content-sidebar')
@@ -34,50 +37,12 @@
 <section class="app-user-list">
   <!-- list and filter start -->
   <div class="card">
+              {!! html_entity_decode($emailTemplate) !!}
 
-    <div class="card-datatable table-responsive pt-0">
-      <table class="user-list-table table">
-        <thead class="table-light">
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <!-- Modal to add new user starts-->
-    <div class="modal modal-slide-in new-user-modal fade" data-bs-backdrop="static" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form id="contactForm" class="add-new-user modal-content pt-0" action="{{url('/contact/store')}}">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Crear Contacto</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Nombre</label>
-              <input type="text" class="form-control dt-full-name" id="basic-icon-default-fullname" placeholder="John Doe" name="name" />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input type="text" id="basic-icon-default-email" class="form-control dt-email" placeholder="john.doe@example.com" name="email" />
-            </div>
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
-              <button id="cancel-user-create" type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-      </div>
-      <input id="contact_id" name="contact_id" type="hidden" value="">
-      <input class="csrf_token" type="hidden" value="{{csrf_token()}}">
-      </form>
-    </div>
+    <!-- {{$emailTemplate}} -->
+
   </div>
-  <!-- Modal to add new user Ends-->
   </div>
-  <!-- list and filter end -->
 </section>
 <!-- users list ends -->
 
@@ -107,11 +72,16 @@
 
 @section('page-script')
 {{-- Page js files --}}
+<script src="{{ asset(mix('js/scripts/pages/app-user-list.js')) }}"></script>
 <script src="{{ asset(mix('js/scripts/pages/app-email.js')) }}"></script>
-<script src="{{ asset(mix('js/scripts/pages/app-contact-list.js')) }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 <script>
-  $("#contactForm").submit(function(e) {
+  // new nicEditor({
+  //   fullPanel: true
+  // }).panelInstance('ck-editor');
+
+  $("#userForm").submit(function(e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -133,17 +103,39 @@
 
   });
 
+
+  $("#emailTemplateForm").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    var actionUrl = form.attr('action');
+
+    $.ajax({
+      type: "POST",
+      url: actionUrl,
+      data: form.serialize(), // serializes the form's elements.
+      headers: {
+        'X-CSRF-TOKEN': $('.csrf_token').val()
+      },
+      success: function(data) {
+        location.reload();
+      }
+    });
+
+  });
+
   function update(id) {
-    $.get(window.location.origin + '/api/contacts/' + id, (data, status) => {
+    $.get(window.location.origin + '/api/users/' + id, (data, status) => {
       $('#basic-icon-default-fullname').val(data.full_name);
       $('#basic-icon-default-email').val(data.email);
-      $('#contact_id').val(data.id);
+      $('#user_id').val(data.id);
       $('#modals-slide-in').modal('show');
     });
   }
 
   function remove(id) {
-    $.post(window.location.origin + '/api/contact/remove', {
+    $.post(window.location.origin + '/api/user/remove', {
       id: id
     }, (data, status) => {
       console.log(data)

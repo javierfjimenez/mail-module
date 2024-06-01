@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('groups', [UserController::class, 'groupList'])->name('groupList');
     Route::get('logout', [AuthenticationController::class, 'destroy']);
     Route::get('/ckbox/token', [AuthenticationController::class, 'token'])->name('ckbox_token');
+    Route::get('/email/temp', [UserController::class, 'emailTemplate'])->name('emailTemplate');
+
 
 });
 /* Route Apps */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\EmailTemplate;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -214,5 +215,41 @@ class UserController extends Controller
     {
         $user = Group::where('id', $request->id)->update(['status' => 2]);
         return response()->json($user);
+    }
+
+    // public function emailTemplate(Request $request)
+    // {
+    //    try {
+    //     $template = new EmailTemplate();
+    //     $template->name = 'actual_template';
+    //     $template->template = $request->template ?? null;
+    //     $template->save();
+    //    } catch (\Throwable $th) {
+    //     dd($th->getMessage());
+    //    }
+    //     return response()->json($template);
+    // }
+
+    // Quill Editor
+    public function emailTemplate()
+    {
+
+        // $pageConfigs = ['pageHeader' => false];
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
+        $emailTemplate = EmailTemplate::select('template')->first();
+        // dd($emailTemplate->template);
+        return view('/content/apps/user/app-email-template', ['pageConfigs' => $pageConfigs, 'emailTemplate' => $emailTemplate->template ?? null]);
+
+        // $breadcrumbs = [
+        //     ['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Form Elements"], ['name' => "Quill Editor"]
+        // ];
+
+        // return view('/content/forms/form-elements/form-quill-editor', [
+        //     'breadcrumbs' => $breadcrumbs,'page' => $pageConfigs
+        // ]);
     }
 }

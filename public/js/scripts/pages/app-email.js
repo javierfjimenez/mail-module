@@ -190,8 +190,8 @@ $(function () {
       wrapperCC.hide();
       wrapperBCC.hide();
       // quill editor content
-      var quill_editor = $('.compose-form .ql-editor');
-      quill_editor[0].innerHTML = '';
+      // var quill_editor = $('.compose-form .ql-editor');
+      // quill_editor[0].innerHTML = '';
     });
   }
 

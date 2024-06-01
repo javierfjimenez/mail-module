@@ -32,6 +32,24 @@
 @endsection
 
 @section('content')
+<style>
+  #ck-editor {
+    width: 1000px;
+    height: 700px;
+    margin: 20px auto;
+  }
+
+  .ck-editor__editable[role="textbox"] {
+    /* Editing area */
+    min-height: 200px;
+  }
+
+  .ck-content .image {
+    /* Block images */
+    max-width: 80%;
+    margin: 20px auto;
+  }
+</style>
 <div class="body-content-overlay"></div>
 <!-- users list start -->
 <section class="app-user-list">
@@ -93,164 +111,139 @@
     <!-- Modal to add new user starts-->
     <div class="modal new-user-modal fade" data-bs-backdrop="static" id="modals-template-in">
       <div class="modal-dialog modal-xl">
-        <form id="emailTemplateForm" class="add-new-user modal-content pt-0" action="{{url('/users/store')}}">
+        <form id="emailTemplateForm" class="add-new-user modal-content pt-0" action="{{url('/api/email/template')}}">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">Plantilla de correo</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="mb-1">
-              <div class="ck-editor-template">
-                <textarea class="form-control" id="ck-editor" placeholder="Enter the Description" rows="20" name="body"></textarea>
-                <!-- <textarea id="editor"><?php echo htmlspecialchars('<h1>Example</h1><p>Hello world</p>'); ?></textarea> -->
-
-              </div>
+              <div id="editor"></div>
             </div>
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
-              <button id="cancel-email-template" type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+            <div class="ck-editor-template">
+              <textarea class="form-control" id="ck-editor" placeholder="Enter the Description" cols="50" rows="50" name="template">
+
+
+              <p>&nbsp;</p>
+
+
+<div style="-webkit-text-stroke-width:0px; margin-left:auto; margin-right:auto">
+<table id="m_-4047652640647140030Table_01" style="border:undefined">
+    <tbody>
+        <tr>
+            <td>
+            <table align="center" id="m_-4047652640647140030backgroundTable" style="border:undefined; width:100%">
+                <tbody>
+                    <tr>
+                        <td style="vertical-align:top">
+                        <table align="center" id="m_-4047652640647140030newsTable" style="border:undefined; width:600px">
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align:top">
+                                    <div id="m_-4047652640647140030container" style="padding:0px">
+                                    <table align="center" style="border:undefined; width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td style="vertical-align:top">
+                                                <table style="border:undefined; width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align:center; vertical-align:top">&nbsp;
+                                                            <p><sub><img src="{{asset('images/email-template/Logo.png')}}"  style="height:154px; width:235px" /></sub></p>
+
+
+                                                            <p><sup><span style="font-family:Verdana,Geneva,sans-serif"><span style="font-size:11px"><strong>__</strong></span></span></sup></p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                &nbsp;
+
+
+                                                <table style="border:undefined; width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align:center; vertical-align:top">&nbsp;
+                                                            <p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-family:Verdana,Geneva,sans-serif"><span style="font-size:11px"><strong>__</strong></span></span></p>
+
+
+                                                            <p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-size:10px"><strong><span style="font-family:Arial,Helvetica,sans-serif"><span style="background-color:white"><span style="color:#555555">**DISCLAIMER**</span></span></span></strong></span></p>
+
+
+                                                            <p style="margin-left:0cm; margin-right:0cm; text-align:justify"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><span style="background-color:white"><span style="color:#555555">We inform you, as the recipient of this message, that electronic mail and communications via the Internet do not allow the confidentiality of the messages transmitted, nor their integrity or correct reception, to be assured or guaranteed, for which BANCO CENTRAL DE VENEZUELA (BCV) assumes no responsibility for such circumstances. If you do not consent to the use of email or communications via the Internet, please notify us and let us know immediately. This message is addressed exclusively to its recipient and contains confidential information subject to professional secrecy, the disclosure of which is not permitted by law. If you have received this message by mistake, please immediately remove it, as well as any document attached to it. Likewise, we inform you that the distribution, copying or use of this message, or any document attached to it, whatever its purpose, is prohibited by law.</span></span></span></span></p>
+
+
+                                                            <p style="margin-left:0cm; margin-right:0cm; text-align:justify"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><span style="background-color:white"><span style="color:#555555">For the purposes of the provisions of current regulations regarding the protection of personal data, we inform you that your data will be incorporated into an automated personal data file, created under the responsibility of BANCO CENTRAL DE VENEZUELA (BCV) with the in order to offer you a more personalized, agile and efficient service.</span></span></span></span></p>
+
+
+                                                            <p style="margin-left:0cm; margin-right:0cm; text-align:justify"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><span style="background-color:white"><span style="color:#555555">BANCO CENTRAL DE VENEZUELA (BCV) undertakes to comply with its obligation to secrecy of personal data and its duty to store it, and will adopt the necessary measures to prevent its alteration, loss, treatment or unauthorized access, taking into account all times of the state of technology.</span></span></span></span></p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+
+                                                <table style="border:undefined; width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align:center; vertical-align:top"><a href="#"><img src="{{asset('images/email-template/TerminosCondiciones.png')}}" style="height:19px; width:735px" /></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                &nbsp;
+
+
+                                                <table style="border:undefined; width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align:center; vertical-align:top"><a href="http://www.bcv.org.ve" target="_blank"><img alt="Banco Central de Venezuela (BCV)" src="{{asset('images/email-template/Web.png')}}" style="height:30px; width:30px" /></a></td>
+                                                            <td style="text-align:center; vertical-align:top"><a href="https://www.facebook.com/Banco-Central-de-Venezuela-937741406327397/" target="_blank"><img alt="Facebook BCV" src="{{asset('images/email-template/Facebook.png')}}" style="height:30px; width:30px" /></a></td>
+                                                            <td style="text-align:center; vertical-align:top"><a href="http://www.bcv.org.ve/bcv/contactos" target="_blank"><img alt="Contactos BCV" src="{{asset('images/email-template/Contactos.png')}}" style="height:30px; width:30px" /></a></td>
+                                                            <td style="text-align:center; vertical-align:top"><a href="https://twitter.com/BCV_ORG_VE" target="_blank"><img alt="Twitter BVC" src="{{asset('images/email-template/Twitter.png')}}" style="height:30px; width:30px" /></a></td>
+                                                            <td style="text-align:center; vertical-align:top"><a href="https://www.instagram.com/bcv.org.ve/" target="_blank"><img alt="Instagram BCV" src="{{asset('images/email-template/Instagram.png')}}"style="height:30px; width:30px" /></a></td>
+                                                            <td style="text-align:center; vertical-align:top"><a href="https://www.youtube.com/user/BancoCentralBCV" target="_blank"><img alt="Youtube BCV" src="{{asset('images/email-template/Youtube.png')}}" style="height:30px; width:30px" /></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    </td>
+                                    <td style="vertical-align:top">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+                  
+              </textarea>
             </div>
           </div>
-          <input id="template_id" name="template_id" type="hidden" value="">
-          <input class="csrf_token" type="hidden" value="{{csrf_token()}}">
-        </form>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
+            <button id="cancel-email-template" type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
       </div>
+      <input id="template_id" name="template_id" type="hidden" value="">
+      <input class="csrf_token" type="hidden" value="{{csrf_token()}}">
+      </form>
     </div>
-    <!-- Modal to add new user Ends-->
+  </div>
+  <!-- Modal to add new user Ends-->
   </div>
   <!-- list and filter end -->
 </section>
 <!-- users list ends -->
-
-<!-- compose email -->
-<div class="modal modal-sticky" id="compose-mail" data-bs-keyboard="false">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content p-0">
-      <div class="modal-header">
-        <h5 class="modal-title">Mensaje nuevo</h5>
-        <div class="modal-actions">
-          <a href="#" class="text-body me-75"><i data-feather="minus"></i></a>
-          <a href="#" class="text-body me-75 compose-maximize"><i data-feather="maximize-2"></i></a>
-          <a class="text-body" href="#" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></a>
-        </div>
-      </div>
-      <div class="modal-body flex-grow-1 p-0">
-        <form class="compose-form">
-          <div class="compose-mail-form-field select2-primary">
-            <label for="email-to" class="form-label">Para: </label>
-            <div class="flex-grow-1">
-              <select class="select2 form-select w-100" id="email-to" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
-                <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
-                <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
-              </select>
-            </div>
-            <div>
-              <a class="toggle-cc text-body me-1" href="#">Cc</a>
-              <a class="toggle-bcc text-body" href="#">Bcc</a>
-            </div>
-          </div>
-          <div class="compose-mail-form-field cc-wrapper">
-            <label for="emailCC" class="form-label">Cc: </label>
-            <div class="flex-grow-1">
-              <!-- <input type="text" id="emailCC" class="form-control" placeholder="CC"/> -->
-              <select class="select2 form-select w-100" id="emailCC" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
-                <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
-                <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
-              </select>
-            </div>
-            <a class="text-body toggle-cc" href="#"><i data-feather="x"></i></a>
-          </div>
-          <div class="compose-mail-form-field bcc-wrapper">
-            <label for="emailBCC" class="form-label">Bcc: </label>
-            <div class="flex-grow-1">
-              <!-- <input type="text" id="emailBCC" class="form-control" placeholder="BCC"/> -->
-              <select class="select2 form-select w-100" id="emailBCC" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
-                <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
-                <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
-              </select>
-            </div>
-            <a class="text-body toggle-bcc" href="#"><i data-feather="x"></i></a>
-          </div>
-          <div class="compose-mail-form-field">
-            <label for="emailSubject" class="form-label">Asunto: </label>
-            <input type="text" id="emailSubject" class="form-control" placeholder="Subject" name="emailSubject" />
-          </div>
-          <div id="message-editor">
-            <div class="editor" data-placeholder="Type message..."></div>
-            <div class="compose-editor-toolbar">
-              <span class="ql-formats me-0">
-                <select class="ql-font">
-                  <option selected>Sailec Light</option>
-                  <option value="sofia">Sofia Pro</option>
-                  <option value="slabo">Slabo 27px</option>
-                  <option value="roboto">Roboto Slab</option>
-                  <option value="inconsolata">Inconsolata</option>
-                  <option value="ubuntu">Ubuntu Mono</option>
-                </select>
-              </span>
-              <span class="ql-formats me-0">
-                <button class="ql-bold"></button>
-                <button class="ql-italic"></button>
-                <button class="ql-underline"></button>
-                <button class="ql-link"></button>
-              </span>
-            </div>
-          </div>
-          <div class="compose-footer-wrapper">
-            <div class="btn-wrapper d-flex align-items-center">
-              <div class="btn-group dropup me-1">
-                <button type="button" class="btn btn-primary">Send</button>
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                  <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#"> Schedule Send</a>
-                </div>
-              </div>
-              <!-- add attachment -->
-              <div class="email-attachement">
-                <label for="file-input" class="form-label">
-                  <i data-feather="paperclip" width="17" height="17" class="ms-50"></i>
-                </label>
-
-                <input id="file-input" type="file" class="d-none" />
-              </div>
-            </div>
-            <div class="footer-action d-flex align-items-center">
-              <div class="dropup d-inline-block">
-                <i class="font-medium-2 cursor-pointer me-50" data-feather="more-vertical" role="button" id="composeActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                </i>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="composeActions">
-                  <a class="dropdown-item" href="#">
-                    <span class="align-middle">Add Label</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <span class="align-middle">Plain text mode</span>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">
-                    <span class="align-middle">Print</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <span class="align-middle">Check Spelling</span>
-                  </a>
-                </div>
-              </div>
-              <i data-feather="trash" class="font-medium-2 cursor-pointer" data-bs-dismiss="modal"></i>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!--/ compose email -->
 @endsection
 
 @section('vendor-script')
@@ -282,6 +275,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 <script>
+  // new nicEditor({
+  //   fullPanel: true
+  // }).panelInstance('ck-editor');
+
   $("#userForm").submit(function(e) {
 
     e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -304,6 +301,28 @@
 
   });
 
+
+  $("#emailTemplateForm").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    var actionUrl = form.attr('action');
+
+    $.ajax({
+      type: "POST",
+      url: actionUrl,
+      data: form.serialize(), // serializes the form's elements.
+      headers: {
+        'X-CSRF-TOKEN': $('.csrf_token').val()
+      },
+      success: function(data) {
+        location.reload();
+      }
+    });
+
+  });
+
   function update(id) {
     $.get(window.location.origin + '/api/users/' + id, (data, status) => {
       $('#basic-icon-default-fullname').val(data.full_name);
@@ -320,28 +339,29 @@
       console.log(data)
     });
   }
-  ClassicEditor.create(document.querySelector('#ck-editor'), {
-      ckbox: {
-        tokenUrl: "{{ route('ckbox_token') }}",
-        theme: 'lark'
+
+  $("#composeForm").submit(function(e) {
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+    var form = $(this);
+    var actionUrl = form.attr('action');
+    $.ajax({
+      type: "POST",
+      url: actionUrl,
+      data: new FormData(this),
+      dataType: "json",
+      processData: false,
+      contentType: false,
+      headers: {
+        "Accept": "application/json",
+        'X-CSRF-TOKEN': $('.csrf_token').val()
       },
-      toolbar: {
-    items: [
-        'undo', 'redo',
-        '|', 'heading',
-        '|', 'fontfamily', 'fontsize', 'color', 'fontBackgroundColor',
-        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript',
-        '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
-        '|', 'alignment',
-        '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-    ],
-    shouldNotGroupWhenFull: true
-}
 
-
-    })
-    .catch(error => {
-      console.error(error);
+      success: function(data) {
+        // location.reload();
+        //alert(data); // show response from the php script.
+      }
     });
+
+  });
 </script>
 @endsection

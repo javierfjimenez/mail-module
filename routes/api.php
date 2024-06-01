@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\EmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,9 @@ Route::post('contact/remove', [UserController::class, 'contactRemove'])->name('c
 
 Route::get('groups/{id}', [UserController::class, 'getGroupByID'])->name('getGroupByID');
 Route::post('group/remove', [UserController::class, 'groupRemove'])->name('groupRemove');
+
+Route::post('email/template', [UserController::class, 'emailTemplate'])->name('emailTemplate');
+Route::post('email/send', [EmailController::class, 'sendMail'])->name('sendMail');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

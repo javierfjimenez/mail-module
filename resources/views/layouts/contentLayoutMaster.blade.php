@@ -27,9 +27,8 @@ $configData = Helper::applClasses();
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
     rel="stylesheet">
 
+    <script src="{{ asset(mix('js/scripts/pages/nicEdit.js')) }}"></script>
 
-<script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
   {{-- Include core + vendor Styles --}}
   @include('panels/styles')
 
