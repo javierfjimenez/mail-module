@@ -61,7 +61,7 @@ class UserController extends Controller
 
             return response()->json(['success' => true, 'user' => $user]);
         }
-        /* 
+        /*
         Validation
         */
         $request->validate([
@@ -124,7 +124,7 @@ class UserController extends Controller
             $contact = Contact::where('id', $contact_id)->update(['name' => $request->name, 'email' => $request->email]);
             return response()->json(['success' => true, 'user' => $contact]);
         }
-        /* 
+        /*
         Validation
         */
         $request->validate([
@@ -137,6 +137,7 @@ class UserController extends Controller
         $contact = Contact::create([
             'name' => $request->name,
             'email' => $request->email,
+            'type' => 0,
         ]);
         return response()->json(['success' => true, 'contact' => $contact]);
     }

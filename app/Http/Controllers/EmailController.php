@@ -5,67 +5,119 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
-use SebastianBergmann\Template\Template;
+use Illuminate\Support\Facades\Log;
+use Webklex\IMAP\Facades\Client;
 
 class EmailController extends Controller
 {
 
-    public function sendMail(Request $request)
+    public function getRecievedBox()
     {
-        // dd($request->file('files'));
-        self::sendPhpMail('javier.jj132@gmail.com','Hola Mundo');
+        //  $client = Client::account('default');
+        // try {
+        //Connect to the IMAP Server
+        //$client->connect();
+
+        //Get all Mailboxes
+        /** @var \Webklex\PHPIMAP\Support\FolderCollection $folders */
+        // $folders = $client->getFolders();
+        //Loop through every Mailbox
+        /** @var \Webklex\PHPIMAP\Folder $folder */
+        // foreach ($folders as $folder) {
+
+        //Get all Messages of the current Mailbox $folder
+        /** @var \Webklex\PHPIMAP\Support\MessageCollection $messages */
+        //  $messages = $folder->messages()->all()->get();
+        /** @var \Webklex\PHPIMAP\Message $message */
+        //  foreach ($messages as $message) {
+        //    dd($message->getSubject(), $message->getSender());
+        //    echo $message->getSubject() . '<br />';
+        //   echo 'Attachments: ' . $message->getAttachments()->count() . '<br />';
+        //   echo $message->getHTMLBody();
+
+        //Move the current Message to 'INBOX.read'
+        //   if ($message->move('INBOX.read') == true) {
+        //   echo 'Message has ben moved';
+        //  } else {
+        //     echo 'Message could not be moved';
+        // }
+        //  }
+        //    }
+        // } catch (\Throwable $th) {
+        //     dd($th->getMessage());
+        // }
+        //dd($folders);
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
+
+        return view('/content/apps/email/app-email', ['pageConfigs' => $pageConfigs]);
     }
 
-    static function sendPhpMail($mailTo, $subject, $files = [])
+    public function sendMail(Request $request)
+    {
+        // Validar entrada
+        $request->validate([
+            //'email-to' => 'required|email',
+            'emailSubject' => 'required|string|max:255',
+            'files.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx,zip'
+        ]);
+
+        $mailTo = 'javier.jj132@gmail.com'/* $request->input('mailTo')*/;
+        $subject = $request->input('emailSubject');
+        $files = $request->file('files');
+
+        if ($this->sendPhpMail($mailTo, $subject, $files))
+            return response()->json(true);
+
+        return response()->json(false);
+    }
+    private function sendPhpMail($mailTo, $subject, $files = [])
     {
         try {
-            $mailFrom = Contact::where('type', 1)->first();
-            $finalMessage = EmailTemplate::select('template')->first();
-            $boundary = md5(time()); // define boundary with a md5 hashed value 
-            $name     = [];
-            $size     = [];
-            $type     = [];
-            $files    = [];
+            $mailFrom = Contact::select('email')->where('type', 1)->first()->email ?? '';
+            $finalMessage = EmailTemplate::select('template')->first()->template ?? '';
+            $boundary = md5(time()); // define boundary with a md5 hashed value
 
-            $ccFormat = session()->get('EMAIL_CC_FOR_SEND') == 'true' ? 'CC: ' : 'BCC: ';
-            $signedBy = session()->get('EMAIL_SINGNED_BY_SEND');
-            $mime_boundary = "$boundary";
-            $headers = "From: " . strtoupper(session()->get('EMAIL_FROM')) . " <$mailFrom->email> \r\n";
-            $headers .= "Reply-To: <$mailFrom->email>  \r\n";
-            $headers .= "Sent-By: <$signedBy> \r\n";
-            $headers .= "Signed-By: <$signedBy> \r\n";
-            // $headers .= $ccFormat . implode(",", session()->get('EMAIL_FOR_SEND')) . "\r\n";
-            $headers .= "MIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\"";
+            $headers = "From: " . strtoupper(session()->get('EMAIL_FROM')) . " <{$mailFrom}>\r\n";
+            $headers .= "Reply-To: <{$mailFrom}>\r\n";
+            $headers .= "Sent-By: <{$mailFrom}>\r\n";
+            $headers .= "Signed-By: <{$mailFrom}>\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"";
 
-            $body = "--{$mime_boundary}\n" . "Content-Type: text/html; charset=iso-8859-1\n" .
-                "Content-Transfer-Encoding: 2bit\n\n" . $finalMessage . "\n\n";
-
-            //plain text 
-            if (isset($files) and is_iterable($files)) {
-                $i = 0;
-                foreach ($files as $file) {
-                    $contentID = rand(1000, 99999);
-                    $handle = @fopen($file, "r"); // set the file handle only for reading the file 
-                    $content = @fread($handle, $size[$i]); // reading the file 
-                    @fclose($handle);                 // close upon completion 
-
-                    $file = chunk_split(base64_encode($content));
-
-                    //attachment 
-                    $body .= "--{$mime_boundary}\r\n";
-                    $body .= 'Content-Type: ' . $type[$i] . '; name="' . $name[$i] . '"' . "\r\n";
-                    $body .= 'Content-Disposition: attachment; filename="' . $name[$i] . '"' . "\r\n";
-                    $body .= "Content-Transfer-Encoding: base64\r\n";
-                    $body .= "Content-ID: <$contentID> \r\n";
-                    $body .= "X-Attachment-Id: $contentID \r\n\r\n";
-                    $body .= $file; // Attaching the encoded file with email 
-                    $i++;
+            $body = "--{$boundary}\r\n";
+            $body .= "Content-Type: text/html; charset=iso-8859-1\r\n";
+            $body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+            $body .= $finalMessage . "\r\n\r\n";
+            if (!empty($files)) {
+                for ($i = 0; $i < count($files); $i++) {
+                    $file_name = basename($files[$i]);
+                    $file_size = filesize($files[$i]);
+                    $file_type = $files[$i]->getClientMimeType();
+                    $file_original_name = $files[$i]->getClientOriginalName();
+                    $fp =    @fopen($files[$i], "rb");
+                    $data =  @fread($fp, $file_size);
+                    @fclose($fp);
+                    $fileContent = chunk_split(base64_encode($data));
+                    $body .= "--{$boundary}\r\n";
+                    $body .= "Content-Type: {$file_type}; name=\"{$file_original_name}\"\r\n";
+                    $body .= "Content-Disposition: attachment; filename=\"{$file_original_name}\"\r\n";
+                    $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
+                    $body .= $fileContent . "\r\n\r\n";
                 }
             }
-            $body .= "--{$mime_boundary}--";
-            @mail($mailTo, $subject, $body, $headers);
-        } catch (\Throwable $th) {
-            dd($th);
+            $body .= "--{$boundary}--";
+            if (mail($mailTo, $subject, $body, $headers)) {
+                return true;
+            } else {
+                throw new \Exception('Mail function failed');
+            }
+        } catch (\Exception $e) {
+            Log::error("Error sending email: " . $e->getMessage());
+            return false;
         }
     }
 }

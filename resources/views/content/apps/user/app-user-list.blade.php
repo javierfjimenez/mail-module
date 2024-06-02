@@ -32,32 +32,15 @@
 @endsection
 
 @section('content')
-<style>
-  #ck-editor {
-    width: 1000px;
-    height: 700px;
-    margin: 20px auto;
-  }
 
-  .ck-editor__editable[role="textbox"] {
-    /* Editing area */
-    min-height: 200px;
-  }
-
-  .ck-content .image {
-    /* Block images */
-    max-width: 80%;
-    margin: 20px auto;
-  }
-</style>
 <div class="body-content-overlay"></div>
 <!-- users list start -->
 <section class="app-user-list">
   <!-- list and filter start -->
   <div class="card">
 
-    <div class="card-datatable table-responsive pt-0">
-      <table class="user-list-table table">
+    <div class="pt-0 card-datatable table-responsive">
+      <table class="table user-list-table">
         <thead class="table-light">
           <tr>
             <th></th>
@@ -73,9 +56,9 @@
     <!-- Modal to add new user starts-->
     <div class="modal modal-slide-in new-user-modal fade" data-bs-backdrop="static" id="modals-slide-in">
       <div class="modal-dialog">
-        <form id="userForm" class="add-new-user modal-content pt-0" action="{{url('/users/store')}}">
+        <form id="userForm" class="pt-0 add-new-user modal-content" action="{{url('/users/store')}}">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
+          <div class="mb-1 modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Crear Usuario</h5>
           </div>
           <div class="modal-body flex-grow-1">
@@ -111,9 +94,9 @@
     <!-- Modal to add new user starts-->
     <div class="modal new-user-modal fade" data-bs-backdrop="static" id="modals-template-in">
       <div class="modal-dialog modal-xl">
-        <form id="emailTemplateForm" class="add-new-user modal-content pt-0" action="{{url('/api/email/template')}}">
+        <form id="emailTemplateForm" class="pt-0 add-new-user modal-content" action="{{url('/api/email/template')}}">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
+          <div class="mb-1 modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Plantilla de correo</h5>
           </div>
           <div class="modal-body flex-grow-1">
@@ -225,7 +208,7 @@
     </tbody>
 </table>
 </div>
-                  
+
               </textarea>
             </div>
           </div>
@@ -355,13 +338,11 @@
         "Accept": "application/json",
         'X-CSRF-TOKEN': $('.csrf_token').val()
       },
-
       success: function(data) {
-        // location.reload();
+         location.reload();
         //alert(data); // show response from the php script.
       }
     });
-
   });
 </script>
 @endsection

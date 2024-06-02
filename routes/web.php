@@ -16,6 +16,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\MiscellaneousController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,8 @@ Route::get('authenticate', [AuthenticationController::class, 'authenticate'])->n
 //     Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
 // });
 /* Route Dashboards */
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', [AppsController::class, 'emailApp'])->name('app-email');
+//Route::middleware(['auth'])->group(function () {
+    Route::get('/', [EmailController::class, 'getRecievedBox'])->name('getRecievedBox');
     Route::get('users', [UserController::class, 'index'])->name('index');
     Route::post('users/store', [UserController::class, 'userStore'])->name('userStore');
     Route::post('contact/store', [UserController::class, 'contactStore'])->name('contactStore');
@@ -52,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/email/temp', [UserController::class, 'emailTemplate'])->name('emailTemplate');
 
 
-});
+//});
 /* Route Apps */
 // Route::group(['prefix' => 'app'], function () {
 //     // Route::get('email', [AppsController::class, 'emailApp'])->name('app-email');
