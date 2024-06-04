@@ -242,15 +242,7 @@ class UserController extends Controller
             'pageClass' => 'email-application',
         ];
         $emailTemplate = EmailTemplate::select('template')->first();
-        // dd($emailTemplate->template);
         return view('/content/apps/user/app-email-template', ['pageConfigs' => $pageConfigs, 'emailTemplate' => $emailTemplate->template ?? null]);
 
-        // $breadcrumbs = [
-        //     ['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Form Elements"], ['name' => "Quill Editor"]
-        // ];
-
-        // return view('/content/forms/form-elements/form-quill-editor', [
-        //     'breadcrumbs' => $breadcrumbs,'page' => $pageConfigs
-        // ]);
     }
 }

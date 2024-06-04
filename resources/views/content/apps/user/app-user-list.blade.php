@@ -258,9 +258,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 <script>
-  // new nicEditor({
-  //   fullPanel: true
-  // }).panelInstance('ck-editor');
+  new nicEditor({
+    fullPanel: true
+  }).panelInstance('ck-editor');
 
   $("#userForm").submit(function(e) {
 
@@ -326,6 +326,8 @@
   $("#composeForm").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
     var form = $(this);
+    var pText = document.querySelectorAll('#message-editor .editor p');
+    console.log(pText[0])
     var actionUrl = form.attr('action');
     $.ajax({
       type: "POST",
@@ -339,7 +341,7 @@
         'X-CSRF-TOKEN': $('.csrf_token').val()
       },
       success: function(data) {
-         location.reload();
+        //  location.reload();
         //alert(data); // show response from the php script.
       }
     });

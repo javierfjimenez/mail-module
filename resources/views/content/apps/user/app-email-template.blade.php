@@ -32,16 +32,36 @@
 @endsection
 
 @section('content')
+<style>
+  .my_scroll_div {
+    overflow-y: scroll;
+    max-height: 600px;
+    resize: none;
+  }
+</style>
 <div class="body-content-overlay"></div>
 <!-- users list start -->
 <section class="app-user-list">
   <!-- list and filter start -->
   <div class="card">
-              {!! html_entity_decode($emailTemplate) !!}
 
-    <!-- {{$emailTemplate}} -->
+    <div class="pt-0 card-datatable table-responsive my_scroll_div d-flex justify-content-center" style="margin-bottom:15rem!important;">
+      <!-- list and filter start -->
+      <br />
+      <form id="emailTemplateForm" method="post" action="{{url('api/email/template/store')}}" class="mb-3">
+        <div class="d-flex justify-content-end my-2">
+          <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
+        </div>
+        <div class="">
+          <textarea name="template" id="ck-editor" cols="100" rows="30">{!! html_entity_decode($emailTemplate)!!}</textarea>
+        </div>
 
-  </div>
+        <div class="body-content-overlay"></div>
+
+      </form>
+      <!-- {{$emailTemplate}} -->
+
+    </div>
   </div>
 </section>
 <!-- users list ends -->
@@ -77,9 +97,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 <script>
-  // new nicEditor({
-  //   fullPanel: true
-  // }).panelInstance('ck-editor');
+  new nicEditor({
+    fullPanel: true
+  }).panelInstance('ck-editor');
 
   $("#userForm").submit(function(e) {
 

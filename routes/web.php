@@ -54,6 +54,7 @@ Route::get('authenticate', [AuthenticationController::class, 'authenticate'])->n
 
 
 //});
+
 /* Route Apps */
 // Route::group(['prefix' => 'app'], function () {
 //     // Route::get('email', [AppsController::class, 'emailApp'])->name('app-email');

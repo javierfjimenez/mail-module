@@ -120,4 +120,20 @@ class EmailController extends Controller
             return false;
         }
     }
+
+    public function emailTemplateStore(Request $request)
+    {
+        $request->validate([
+            'template' => 'required|string',
+        ]);
+        
+        EmailTemplate::updateOrCreate([
+            'name' => 'base_template',
+        ],
+         [
+            'template' => $request->template ?? null
+        ]);
+
+        return response()->json(true);
+    }
 }
