@@ -31,6 +31,8 @@ Route::post('group/remove', [UserController::class, 'groupRemove'])->name('group
 Route::post('email/template/store', [EmailController::class, 'emailTemplateStore'])->name('emailTemplateStore');
 Route::post('email/template', [UserController::class, 'emailTemplate'])->name('emailTemplate');
 Route::post('email/send', [EmailController::class, 'sendMail'])->name('sendMail');
+Route::get('get/mail/{uid}', [EmailController::class, 'getEmailByUid'])->name('getEmailByUid');
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

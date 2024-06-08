@@ -4,58 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\EmailTemplate;
+use App\Services\ImapService;
+use CustomMessageMask;
+// use CustomMessageMask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Webklex\IMAP\Facades\Client;
 
 class EmailController extends Controller
 {
+    protected $imapService;
 
-    public function getRecievedBox()
+    public function __construct(ImapService $imapService)
     {
-        //  $client = Client::account('default');
-        // try {
-        //Connect to the IMAP Server
-        //$client->connect();
+        $this->imapService = $imapService;
+    }
+    public function getNewEmails()
+    {
+        try {
+            $messages = $this->imapService->getUnseenEmails();
+        } catch (\Throwable $th) {
+            Log::error('Error fetching new emails: ' . $th->getMessage());
+            return response()->view('errors.custom', [], 500);
+        }
 
-        //Get all Mailboxes
-        /** @var \Webklex\PHPIMAP\Support\FolderCollection $folders */
-        // $folders = $client->getFolders();
-        //Loop through every Mailbox
-        /** @var \Webklex\PHPIMAP\Folder $folder */
-        // foreach ($folders as $folder) {
-
-        //Get all Messages of the current Mailbox $folder
-        /** @var \Webklex\PHPIMAP\Support\MessageCollection $messages */
-        //  $messages = $folder->messages()->all()->get();
-        /** @var \Webklex\PHPIMAP\Message $message */
-        //  foreach ($messages as $message) {
-        //    dd($message->getSubject(), $message->getSender());
-        //    echo $message->getSubject() . '<br />';
-        //   echo 'Attachments: ' . $message->getAttachments()->count() . '<br />';
-        //   echo $message->getHTMLBody();
-
-        //Move the current Message to 'INBOX.read'
-        //   if ($message->move('INBOX.read') == true) {
-        //   echo 'Message has ben moved';
-        //  } else {
-        //     echo 'Message could not be moved';
-        // }
-        //  }
-        //    }
-        // } catch (\Throwable $th) {
-        //     dd($th->getMessage());
-        // }
-        //dd($folders);
         $pageConfigs = [
             'pageHeader' => false,
             'contentLayout' => "content-left-sidebar",
             'pageClass' => 'email-application',
         ];
 
-        return view('/content/apps/email/app-email', ['pageConfigs' => $pageConfigs]);
+        return view('/content/apps/email/app-email', [
+            'pageConfigs' => $pageConfigs,
+            'messages' => $messages
+        ]);
     }
 
+    public function getEmailByUid($uid)
+    {
+        try {
+            $message = $this->imapService->getEmailByUid($uid);
+
+            $message->getAttachments()->each(function ($attachment) use ($message) {
+                //dd($attachment->name, $attachment->content);
+                $fp = fopen(storage_path('attachments/') . $attachment->name,"wb");
+                file_put_contents(storage_path('attachments/'. $attachment->name), $attachment->content);
+                $content = file_get_contents(storage_path('attachments/'. $attachment->name));
+                $file = "data:file/pdf;base64,".base64_encode($content);
+                dd($file);
+                fclose($fp);
+
+            });
+            $data = [
+                'subject' => $message->getSubject(),
+                'from' => ['personal' => $message->getFrom()[0]->personal, 'mail' => $message->getFrom()[0]->mail],
+                'to' => $message->getTo()[0]->mail,
+                'date' => $message->getDate(),
+                'body' => $message->getHTMLBody(),
+                'attachments' => ['count' => $message->getAttachments()->count(), 'files' => $message->getAttachments()]
+            ];
+            // $message->setFlag('SEEN');
+            return response()->json(['success' => true, 'data' => $data], 200);
+        } catch (\Throwable $th) {
+            Log::error('Error fetching email by UID: ' . $th->getMessage());
+            return response()->json(['success' => false, 'error' => 'Error fetching emails' . $th], 200);
+        }
+    }
     public function sendMail(Request $request)
     {
         // Validar entrada
@@ -126,13 +139,15 @@ class EmailController extends Controller
         $request->validate([
             'template' => 'required|string',
         ]);
-        
-        EmailTemplate::updateOrCreate([
-            'name' => 'base_template',
-        ],
-         [
-            'template' => $request->template ?? null
-        ]);
+
+        EmailTemplate::updateOrCreate(
+            [
+                'name' => 'base_template',
+            ],
+            [
+                'template' => $request->template ?? null
+            ]
+        );
 
         return response()->json(true);
     }

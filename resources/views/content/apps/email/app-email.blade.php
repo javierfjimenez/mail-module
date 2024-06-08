@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="action-right">
-      <ul class="list-inline m-0">
+      <ul class="m-0 list-inline">
         <li class="list-inline-item">
           <div class="dropdown">
             <a
@@ -123,42 +123,52 @@
   <!-- Email list starts -->
   <div class="email-user-list">
     <ul class="email-media-list">
-      <li class="d-flex user-mail mail-read">
-        <div class="mail-left pe-50">
-          <div class="avatar">
-            <img src="{{asset('images/portrait/small/avatar-s-20.jpg')}}" alt="avatar img holder" />
-          </div>
-          <div class="user-action">
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="customCheck1" />
-              <label class="form-check-label" for="customCheck1"></label>
-            </div>
-            <span class="email-favorite"><i data-feather="star"></i></span>
-          </div>
-        </div>
-        <div class="mail-body">
-          <div class="mail-details">
-            <div class="mail-items">
-              <h5 class="mb-25">Tonny Deep</h5>
-              <span class="text-truncate">🎯 Focused impactful open system </span>
-            </div>
-            <div class="mail-meta-item">
-              <span class="me-50 bullet bullet-success bullet-sm"></span>
-              <span class="mail-date">4:14 AM</span>
-            </div>
-          </div>
-          <div class="mail-message">
-            <p class="text-truncate mb-0">
-              Hey John, bah kivu decrete epanorthotic unnotched Argyroneta nonius veratrine preimaginary saunders
-              demidolmen Chaldaic allusiveness lorriker unworshipping ribaldish tableman hendiadys outwrest unendeavored
-              fulfillment scientifical Pianokoto CheloniaFreudian sperate unchary hyperneurotic phlogiston duodecahedron
-              unflown Paguridea catena disrelishable Stygian paleopsychology cantoris phosphoritic disconcord fruited
-              inblow somewhatly ilioperoneal forrard palfrey Satyrinae outfreeman melebiose
-            </p>
-          </div>
-        </div>
-      </li>
-      <li class="d-flex user-mail">
+        @if($messages->count() > 0)
+        @foreach($messages as $message)
+                {{-- <td>{{$message->getUid()}}</td>
+                <td>{{$message->getSubject()}}</td>
+                <td>{{$message->getFrom()[0]->mail}}</td>
+                <td>{{$message->getAttachments()->count() > 0 ? 'yes' : 'no'}}</td> --}}
+
+                <li class="d-flex user-mail" uid="{{$message->getUid()}}">
+                    <div class="mail-left pe-50">
+                      <div class="avatar">
+                        {{-- <img src="{{asset('images/portrait/small/avatar-s-20.jpg')}}" alt="avatar img holder" /> --}}
+                      </div>
+                      <div class="user-action">
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="customCheck1" />
+                          <label class="form-check-label" for="customCheck1"></label>
+                        </div>
+                        <span class="email-favorite"><i data-feather="star"></i></span>
+                      </div>
+                    </div>
+                    <div class="mail-body">
+                      <div class="mail-details">
+                        <div class="mail-items">
+                          <h5 class="mb-25">{{$message->getFrom()}}</h5>
+                          <span class="text-truncate">🎯 {{$message->getSubject()}} </span>
+                        </div>
+                        <div class="mail-meta-item">
+                          <span class="me-50 bullet bullet-success bullet-sm"></span>
+                          <span class="mail-date">4:14 AM</span>
+                        </div>
+                      </div>
+                      <div class="mail-message">
+                        <p class="mb-0 text-truncate">
+                            {{$message->getTextBody()}}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+        @endforeach
+    @else
+        <tr>
+            <td colspan="4">No messages found</td>
+        </tr>
+    @endif
+
+      {{-- <li class="d-flex user-mail">
         <div class="mail-left pe-50">
           <div class="avatar">
             <img src="{{asset('images/portrait/small/avatar-s-17.jpg')}}" alt="Generic placeholder image" />
@@ -249,7 +259,7 @@
             </div>
           </div>
           <div class="mail-message">
-            <p class="text-truncate mb-0">
+            <p class="mb-0 text-truncate">
               Hello, Everything looks good. Pastry marshmallow sugar plum. Gingerbread bonbon fruitcake gummi bears
               wafer chocolate cake gummies tart ice cream. Danish topping biscuit dessert donut dessert. Chocolate
               jelly-o topping marzipan fruitcake.
@@ -274,7 +284,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Ardis Balderson</h5>
-              <span class="text-truncate mb-0">Focused impactful open system</span>
+              <span class="mb-0 text-truncate">Focused impactful open system</span>
             </div>
             <div class="mail-meta-item">
               <i data-feather="paperclip"></i>
@@ -310,7 +320,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Modestine Spat</h5>
-              <span class="text-truncate mb-0">Profound systemic alliance 🎉</span>
+              <span class="mb-0 text-truncate">Profound systemic alliance 🎉</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-primary bullet-sm"></span>
@@ -345,7 +355,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Eb Begg</h5>
-              <span class="text-truncate mb-0">Organized value-added model</span>
+              <span class="mb-0 text-truncate">Organized value-added model</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-success bullet-sm"></span>
@@ -380,7 +390,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Waldemar Mannering</h5>
-              <span class="text-truncate mb-0">Quality-focused methodical flexibility</span>
+              <span class="mb-0 text-truncate">Quality-focused methodical flexibility</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-danger bullet-sm"></span>
@@ -415,7 +425,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Louetta Esses</h5>
-              <span class="text-truncate mb-0">Company Report</span>
+              <span class="mb-0 text-truncate">Company Report</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-primary bullet-sm"></span>
@@ -448,7 +458,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Tressa Gass</h5>
-              <span class="text-truncate mb-0">Theme Update</span>
+              <span class="mb-0 text-truncate">Theme Update</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-primary bullet-sm"></span>
@@ -481,7 +491,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Tommy Sicilia</h5>
-              <span class="text-truncate mb-0">Thanks, Let's do it.</span>
+              <span class="mb-0 text-truncate">Thanks, Let's do it.</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-warning bullet-sm"></span>
@@ -514,7 +524,7 @@
           <div class="mail-details">
             <div class="mail-items">
               <h5 class="mb-25">Heather Howell</h5>
-              <span class="text-truncate mb-0">Thanks, Let's do it.</span>
+              <span class="mb-0 text-truncate">Thanks, Let's do it.</span>
             </div>
             <div class="mail-meta-item">
               <span class="mx-50 bullet bullet-warning bullet-sm"></span>
@@ -529,7 +539,7 @@
             </p>
           </div>
         </div>
-      </li>
+      </li> --}}
     </ul>
     <div class="no-results">
       <h5>No Items Found</h5>
@@ -544,10 +554,10 @@
   <div class="email-detail-header">
     <div class="email-header-left d-flex align-items-center">
       <span class="go-back me-1"><i data-feather="chevron-left" class="font-medium-4"></i></span>
-      <h4 class="email-subject mb-0">Focused open system 😃</h4>
+      <h4 class="mb-0 email-subject">Focused open system 😃</h4>
     </div>
     <div class="email-header-right ms-2 ps-1">
-      <ul class="list-inline m-0">
+      <ul class="m-0 list-inline">
         <li class="list-inline-item">
           <span class="action-icon favorite"><i data-feather="star" class="font-medium-2"></i></span>
         </li>
@@ -611,11 +621,11 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-12">
         <div class="card">
           <div class="card-header email-detail-head">
-            <div class="user-details d-flex justify-content-between align-items-center flex-wrap">
+            <div class="flex-wrap user-details d-flex justify-content-between align-items-center">
               <div class="avatar me-75">
                 <img
                   src="{{asset('images/portrait/small/avatar-s-9.jpg')}}"
@@ -679,7 +689,7 @@
               </div>
             </div>
           </div>
-          <div class="card-body mail-message-wrapper pt-2">
+          <div class="pt-2 card-body mail-message-wrapper">
             <div class="mail-message">
               <p class="card-text">Hey John,</p>
               <p class="card-text">
@@ -691,12 +701,12 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <div class="row">
       <div class="col-12">
         <div class="card">
           <div class="card-header email-detail-head">
-            <div class="user-details d-flex justify-content-between align-items-center flex-wrap">
+            <div class="flex-wrap user-details d-flex justify-content-between align-items-center">
               <div class="avatar me-75">
                 <img
                   src="{{asset('images/portrait/small/avatar-s-18.jpg')}}"
@@ -706,32 +716,31 @@
                 />
               </div>
               <div class="mail-items">
-                <h5 class="mb-0">Ardis Balderson</h5>
+                <h5 class="mb-0 personal-from"></h5>
                 <div class="email-info-dropup dropdown">
                   <span
                     role="button"
-                    class="dropdown-toggle font-small-3 text-muted"
+                    class="dropdown-toggle font-small-3 text-muted email-from"
                     id="dropdownMenuButton200"
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    abaldersong@utexas.edu
                   </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton200">
                     <table class="table table-sm table-borderless">
                       <tbody>
                         <tr>
-                          <td class="text-end">From:</td>
-                          <td>abaldersong@utexas.edu</td>
+                          <td class="text-end">De:</td>
+                          <td class="email-from"></td>
                         </tr>
                         <tr>
-                          <td class="text-end">To:</td>
-                          <td>johndoe@ow.ly</td>
+                          <td class="text-end">Para:</td>
+                          <td class="email-to"></td>
                         </tr>
                         <tr>
-                          <td class="text-end">Date:</td>
-                          <td>4:25 AM 13 Jan 2018</td>
+                          <td class="text-end">Fecha:</td>
+                          <td class="email-date"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -760,26 +769,16 @@
               </div>
             </div>
           </div>
-          <div class="card-body mail-message-wrapper pt-2">
+          <div class="pt-2 card-body mail-message-wrapper">
             <div class="mail-message">
-              <p class="card-text">Hey John,</p>
-              <p class="card-text">
-                bah kivu decrete epanorthotic unnotched Argyroneta nonius veratrine preimaginary saunders demidolmen
-                Chaldaic allusiveness lorriker unworshipping ribaldish tableman hendiadys outwrest unendeavored
-                fulfillment scientifical Pianokoto Chelonia
-              </p>
-              <p class="card-text">
-                Freudian sperate unchary hyperneurotic phlogiston duodecahedron unflown Paguridea catena disrelishable
-                Stygian paleopsychology cantoris phosphoritic disconcord fruited inblow somewhatly ilioperoneal forrard
-                palfrey Satyrinae outfreeman melebiose
-              </p>
+
             </div>
           </div>
           <div class="card-footer">
             <div class="mail-attachments">
-              <div class="d-flex align-items-center mb-1">
+              <div class="mb-1 d-flex align-items-center">
                 <i data-feather="paperclip" class="font-medium-1 me-50"></i>
-                <h5 class="fw-bolder text-body mb-0">2 Attachments</h5>
+                <h5 class="mb-0 fw-bolder text-body"><span class="attachment-count"></span></h5>
               </div>
               <div class="d-flex flex-column">
                 <a href="#" class="mb-50">
@@ -820,7 +819,7 @@
 <!-- compose email -->
 <div class="modal modal-sticky" id="compose-mail" data-bs-keyboard="false">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content p-0">
+    <div class="p-0 modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Compose Mail</h5>
         <div class="modal-actions">
@@ -829,7 +828,7 @@
           <a class="text-body" href="#" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></a>
         </div>
       </div>
-      <div class="modal-body flex-grow-1 p-0">
+      <div class="p-0 modal-body flex-grow-1">
         <form class="compose-form">
           <div class="compose-mail-form-field select2-primary">
             <label for="email-to" class="form-label">To: </label>
@@ -927,7 +926,7 @@
             <div class="footer-action d-flex align-items-center">
               <div class="dropup d-inline-block">
                 <i
-                  class="font-medium-2 cursor-pointer me-50"
+                  class="cursor-pointer font-medium-2 me-50"
                   data-feather="more-vertical"
                   role="button"
                   id="composeActions"
@@ -952,7 +951,7 @@
                   </a>
                 </div>
               </div>
-              <i data-feather="trash" class="font-medium-2 cursor-pointer" data-bs-dismiss="modal"></i>
+              <i data-feather="trash" class="cursor-pointer font-medium-2" data-bs-dismiss="modal"></i>
             </div>
           </div>
         </form>
