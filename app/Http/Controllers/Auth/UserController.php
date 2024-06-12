@@ -29,11 +29,11 @@ class UserController extends Controller
         // Cargar contactos solo cuando se necesiten
         $contacts = $this->contactModel->select('id', 'name', 'email')->where('status', 1)->get();
         $groups = $this->groupModel->select('id', 'name')->where('status', 1)->get();
-
         return view('content.apps.user.app-user-list', [
             'pageConfigs' => $pageConfigs,
             'contacts' => $contacts,
             'groups' => $groups,
+            'messagesCount' => $this->messagesCount
         ]);
     }
     public function getUsers()
