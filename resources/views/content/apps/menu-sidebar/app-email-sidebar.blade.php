@@ -1,6 +1,6 @@
 <div class="sidebar-content email-app-sidebar">
   <div class="email-app-menu">
-    <div class="form-group-compose text-center compose-btn">
+    <div class="text-center form-group-compose compose-btn">
       <button type="button" class="compose-email btn btn-primary w-100" data-bs-backdrop="false" data-bs-toggle="modal" data-bs-target="#compose-mail">
         Redactar
       </button>
@@ -10,23 +10,27 @@
         <a href="{{ url('/') }}" class="list-group-item list-group-item-action @if(Request::url() === url('/')) active @endif ">
           <i data-feather="mail" class="font-medium-3 me-50"></i>
           <span class="align-middle">Bandeja de entrada</span>
-          <span class="badge badge-light-primary rounded-pill float-end">3</span>
+          <span class="badge badge-light-primary rounded-pill float-end">{{$messagesCount['unseen'] ?? 0}} </span>
         </a>
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="{{ url('get/seen/emails') }}" class="list-group-item list-group-item-action">
           <i data-feather="send" class="font-medium-3 me-50"></i>
-          <span class="align-middle">Enviados</span>
+          <span class="align-middle">Leídos</span>
+          <span class="badge badge-light-primary rounded-pill float-end">{{$messagesCount['seen'] ?? 0}}</span>
+
         </a>
         <a href="#" class="list-group-item list-group-item-action">
           <i data-feather="star" class="font-medium-3 me-50"></i>
           <span class="align-middle">Borradores</span>
+          <span class="badge badge-light-primary rounded-pill float-end">{{$messagesCount['draft'] ?? 0}}</span>
+
         </a>
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="{{ url('get/deleted/emails') }}" class="list-group-item list-group-item-action">
           <i data-feather="trash" class="font-medium-3 me-50"></i>
           <span class="align-middle">Basura</span>
         </a>
       </div>
       <!-- <hr /> -->
-      <h6 class="section-label mt-3 mb-1 px-2">Configuraciones</h6>
+      <h6 class="px-2 mt-3 mb-1 section-label">Configuraciones</h6>
       <div class="list-group list-group-labels">
         <a href="{{ url('users') }}" class="list-group-item list-group-item-action @if(Request::url() === url('users'))
           active @endif"><span class="bullet bullet-sm bullet-success me-1"></span>Usuarios</a>
@@ -38,7 +42,7 @@
           active @endif" class="list-group-item list-group-item-action"><span class="bullet bullet-sm bullet-primary me-1"></span>Plantilla</a>
         <!-- <a href="{{ url('email/temp') }}" data-bs-backdrop="false" data-bs-toggle="modal" data-bs-target="#modals-template-in" class="list-group-item list-group-item-action" class="list-group-item list-group-item-action"><span class="bullet bullet-sm bullet-primary me-1"></span></a> -->
       </div>
-      <div class="form-group-compose text-center compose-btn">
+      <div class="text-center form-group-compose compose-btn">
         <!-- <button type="button" >
         Plantilla
       </button> -->
@@ -51,7 +55,7 @@
 <!-- compose email -->
 <div class="modal modal-sticky" id="compose-mail" data-bs-keyboard="false">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content p-0">
+    <div class="p-0 modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Mensaje nuevo</h5>
         <div class="modal-actions">
@@ -60,16 +64,15 @@
           <a class="text-body" href="#" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></a>
         </div>
       </div>
-      <div class="modal-body flex-grow-1 p-0">
+      <div class="p-0 modal-body flex-grow-1">
         <form id="composeForm" class="compose-form" method="POST" action="{{url('/api/email/send')}}" enctype="multipart/form-data">
           <div class="compose-mail-form-field select2-primary">
-            <label for="email-to" class="form-label">Para: </label>
+            <label for="emailTo" class="form-label">Para: </label>
             <div class="flex-grow-1">
-              <select class="select2 form-select w-100" id="email-to" name="email-to" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
-                <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
-                <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
+              <select class="select2 form-select w-100" id="email-to" name="emailTo" multiple>
+                @foreach ($contacts as $contact)
+                <option value="{{ $contact->id }}">{{ $contact->email }}</option>
+                @endforeach
               </select>
             </div>
             <div>
@@ -82,10 +85,9 @@
             <div class="flex-grow-1">
               <!-- <input type="text" id="emailCC" class="form-control" placeholder="CC"/> -->
               <select class="select2 form-select w-100" id="emailCC" name="emailCC" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
-                <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
-                <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
+                @foreach ($groups as $group)
+                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                @endforeach
               </select>
             </div>
             <a class="text-body toggle-cc" href="#"><i data-feather="x"></i></a>
@@ -95,10 +97,9 @@
             <div class="flex-grow-1">
               <!-- <input type="text" id="emailBCC" class="form-control" placeholder="BCC"/> -->
               <select class="select2 form-select w-100" id="emailBCC" name="emailBCC" multiple>
-                <option data-avatar="1-small.png" value="Jane Foster">Jane Foster</option>
-                <option data-avatar="3-small.png" value="Donna Frank">Donna Frank</option>
-                <option data-avatar="5-small.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                <option data-avatar="7-small.png" value="Lori Spears">Lori Spears</option>
+                @foreach ($groups as $group)
+                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                @endforeach
               </select>
             </div>
             <a class="text-body toggle-bcc" href="#"><i data-feather="x"></i></a>
@@ -149,7 +150,7 @@
             </div>
             <div class="footer-action d-flex align-items-center">
               <div class="dropup d-inline-block">
-                <i class="font-medium-2 cursor-pointer me-50" data-feather="more-vertical" role="button" id="composeActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="cursor-pointer font-medium-2 me-50" data-feather="more-vertical" role="button" id="composeActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </i>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="composeActions">
                   <a class="dropdown-item" href="#">
@@ -167,7 +168,7 @@
                   </a>
                 </div>
               </div>
-              <i data-feather="trash" class="font-medium-2 cursor-pointer" data-bs-dismiss="modal"></i>
+              <i data-feather="trash" class="cursor-pointer font-medium-2" data-bs-dismiss="modal"></i>
             </div>
           </div>
         </form>

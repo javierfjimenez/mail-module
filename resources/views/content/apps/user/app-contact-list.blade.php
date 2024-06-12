@@ -35,8 +35,8 @@
   <!-- list and filter start -->
   <div class="card">
 
-    <div class="card-datatable table-responsive pt-0">
-      <table class="user-list-table table">
+    <div class="pt-0 card-datatable table-responsive">
+      <table class="table user-list-table">
         <thead class="table-light">
           <tr>
             <th></th>
@@ -50,9 +50,9 @@
     <!-- Modal to add new user starts-->
     <div class="modal modal-slide-in new-user-modal fade" data-bs-backdrop="static" id="modals-slide-in">
       <div class="modal-dialog">
-        <form id="contactForm" class="add-new-user modal-content pt-0" action="{{url('/contact/store')}}">
+        <form id="contactForm" class="pt-0 add-new-user modal-content" action="{{url('/contact/store')}}">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
+          <div class="mb-1 modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Crear Contacto</h5>
           </div>
           <div class="modal-body flex-grow-1">
@@ -64,6 +64,13 @@
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input type="text" id="basic-icon-default-email" class="form-control dt-email" placeholder="john.doe@example.com" name="email" />
             </div>
+            <div class="mb-1">
+                <label class="form-label" for="contact-status">Estatus</label>
+                <select name="status" id="contact-status" class="form-select">
+                  <option value="1">Activo</option>
+                  <option value="2">Inactivo</option>
+                </select>
+              </div>
             <div class="d-flex justify-content-center">
               <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
               <button id="cancel-user-create" type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>

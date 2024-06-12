@@ -49,17 +49,21 @@
       <!-- list and filter start -->
       <br />
       <form id="emailTemplateForm" method="post" action="{{url('api/email/template/store')}}" class="mb-3">
-        <div class="d-flex justify-content-end my-2">
+        <div class="my-2 d-flex justify-content-end">
           <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
         </div>
+        <div class="mb-3">
+            <label class="form-label" for="contact">Enviado por:</label>
+            <input type="text" name="email" class="form-control" placeholder="john@doe.com" value="{{$email}}">
+          </div>
         <div class="">
+            <label class="form-label" for="ck-editor">Plantilla:</label>
           <textarea name="template" id="ck-editor" cols="100" rows="30">{!! html_entity_decode($emailTemplate)!!}</textarea>
         </div>
 
         <div class="body-content-overlay"></div>
 
       </form>
-      <!-- {{$emailTemplate}} -->
 
     </div>
   </div>

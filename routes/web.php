@@ -42,6 +42,9 @@ Route::get('authenticate', [AuthenticationController::class, 'authenticate'])->n
 /* Route Dashboards */
 //Route::middleware(['auth'])->group(function () {
 Route::get('/', [EmailController::class, 'getNewEmails'])->name('getNewEmails');
+Route::get('get/seen/emails', [EmailController::class, 'seenEmails'])->name('seenEmails');
+Route::get('get/deleted/emails', [EmailController::class, 'deletedEmails'])->name('deletedEmails');
+
 Route::get('users', [UserController::class, 'index'])->name('index');
 Route::post('users/store', [UserController::class, 'userStore'])->name('userStore');
 Route::post('contact/store', [UserController::class, 'contactStore'])->name('contactStore');

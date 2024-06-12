@@ -75,9 +75,10 @@
               <input type="password" class="form-control" placeholder="***********" name="password" />
             </div>
             <div class="mb-1">
-              <label class="form-label" for="user-role">Rol</label>
-              <select name="role" id="user-role" class="select2 form-select">
-                <option value="admin">Admin</option>
+              <label class="form-label" for="user-status">Estatus</label>
+              <select name="status" id="user-status" class="form-select">
+                <option value="1">Activo</option>
+                <option value="2">Inactivo</option>
               </select>
             </div>
             <div class="d-flex justify-content-center">

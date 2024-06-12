@@ -35,8 +35,8 @@
   <!-- list and filter start -->
   <div class="card">
 
-    <div class="card-datatable table-responsive pt-0">
-      <table class="user-list-table table">
+    <div class="pt-0 card-datatable table-responsive">
+      <table class="table user-list-table">
         <thead class="table-light">
           <tr>
             <th></th>
@@ -50,9 +50,9 @@
     <!-- Modal to add new user starts-->
     <div class="modal modal-slide-in new-user-modal fade" data-bs-backdrop="static" id="modals-slide-in">
       <div class="modal-dialog">
-        <form id="groupForm" class="add-new-user modal-content pt-0" action="{{url('/group/store')}}">
+        <form id="groupForm" class="pt-0 add-new-user modal-content" action="{{url('/group/store')}}">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
+          <div class="mb-1 modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Crear Grupo</h5>
           </div>
           <div class="modal-body flex-grow-1">
@@ -68,6 +68,13 @@
                 @endforeach
               </select>
             </div>
+            <div class="mb-1">
+                <label class="form-label" for="group-status">Estatus</label>
+                <select name="status" id="group-status" class="form-select">
+                  <option value="1">Activo</option>
+                  <option value="2">Inactivo</option>
+                </select>
+              </div>
             <div class="d-flex justify-content-center">
               <button type="submit" class="btn btn-primary me-1 data-submit">Guardar</button>
               <button id="cancel-user-create" type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -89,7 +96,7 @@
 <!-- compose email -->
 <div class="modal modal-sticky" id="compose-mail" data-bs-keyboard="false">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content p-0">
+    <div class="p-0 modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Compose Mail</h5>
         <div class="modal-actions">
@@ -98,7 +105,7 @@
           <a class="text-body" href="#" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></a>
         </div>
       </div>
-      <div class="modal-body flex-grow-1 p-0">
+      <div class="p-0 modal-body flex-grow-1">
         <form class="compose-form">
           <div class="compose-mail-form-field select2-primary">
             <label for="email-to" class="form-label">To: </label>
@@ -188,7 +195,7 @@
             </div>
             <div class="footer-action d-flex align-items-center">
               <div class="dropup d-inline-block">
-                <i class="font-medium-2 cursor-pointer me-50" data-feather="more-vertical" role="button" id="composeActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="cursor-pointer font-medium-2 me-50" data-feather="more-vertical" role="button" id="composeActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </i>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="composeActions">
                   <a class="dropdown-item" href="#">
@@ -206,7 +213,7 @@
                   </a>
                 </div>
               </div>
-              <i data-feather="trash" class="font-medium-2 cursor-pointer" data-bs-dismiss="modal"></i>
+              <i data-feather="trash" class="cursor-pointer font-medium-2" data-bs-dismiss="modal"></i>
             </div>
           </div>
         </form>

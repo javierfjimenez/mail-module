@@ -4,20 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\EmailTemplate;
-use App\Services\ImapService;
-use CustomMessageMask;
-// use CustomMessageMask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class EmailController extends Controller
 {
-    protected $imapService;
-
-    public function __construct(ImapService $imapService)
-    {
-        $this->imapService = $imapService;
-    }
     public function getNewEmails()
     {
         try {
@@ -35,7 +26,54 @@ class EmailController extends Controller
 
         return view('/content/apps/email/app-email', [
             'pageConfigs' => $pageConfigs,
-            'messages' => $messages
+            'messages' => $messages,
+            'messagesCount' => $this->messagesCount
+
+        ]);
+    }
+
+    public function seenEmails()
+    {
+        try {
+            $messages = $this->imapService->getSeenEmails();
+        } catch (\Throwable $th) {
+            Log::error('Error fetching new emails: ' . $th->getMessage());
+            return response()->view('errors.custom', [], 500);
+        }
+
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
+
+        return view('/content/apps/email/app-email', [
+            'pageConfigs' => $pageConfigs,
+            'messages' => $messages,
+            'messagesCount' => $this->messagesCount
+        ]);
+    }
+
+    public function deletedEmails()
+    {
+        try {
+            $messages = $this->imapService->getDeletedEmails();
+        } catch (\Throwable $th) {
+            Log::error('Error fetching new emails: ' . $th->getMessage());
+            return response()->view('errors.custom', [], 500);
+        }
+
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
+
+        return view('/content/apps/email/app-email', [
+            'pageConfigs' => $pageConfigs,
+            'messages' => $messages,
+            'messagesCount' => $this->messagesCount
+
         ]);
     }
 
@@ -45,14 +83,12 @@ class EmailController extends Controller
             $message = $this->imapService->getEmailByUid($uid);
 
             $message->getAttachments()->each(function ($attachment) use ($message) {
-                //dd($attachment->name, $attachment->content);
-                $fp = fopen(storage_path('attachments/') . $attachment->name,"wb");
-                file_put_contents(storage_path('attachments/'. $attachment->name), $attachment->content);
-                $content = file_get_contents(storage_path('attachments/'. $attachment->name));
-                $file = "data:file/pdf;base64,".base64_encode($content);
+                $fp = fopen(storage_path('attachments/') . $attachment->name, "wb");
+                file_put_contents(storage_path('attachments/' . $attachment->name), $attachment->content);
+                $content = file_get_contents(storage_path('attachments/' . $attachment->name));
+                $file = "data:file/pdf;base64," . base64_encode($content);
                 dd($file);
                 fclose($fp);
-
             });
             $data = [
                 'subject' => $message->getSubject(),
@@ -73,15 +109,14 @@ class EmailController extends Controller
     {
         // Validar entrada
         $request->validate([
-            //'email-to' => 'required|email',
+            'emailTo' => 'required|email',
             'emailSubject' => 'required|string|max:255',
             'files.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx,zip'
         ]);
 
-        $mailTo = 'javier.jj132@gmail.com'/* $request->input('mailTo')*/;
+        $mailTo = $request->input('mailTo');
         $subject = $request->input('emailSubject');
         $files = $request->file('files');
-
         if ($this->sendPhpMail($mailTo, $subject, $files))
             return response()->json(true);
 
@@ -90,14 +125,14 @@ class EmailController extends Controller
     private function sendPhpMail($mailTo, $subject, $files = [])
     {
         try {
-            $mailFrom = Contact::select('email')->where('type', 1)->first()->email ?? '';
+            $mailFrom = EmailTemplate::select('email')->first()->email ?? '';
             $finalMessage = EmailTemplate::select('template')->first()->template ?? '';
             $boundary = md5(time()); // define boundary with a md5 hashed value
 
-            $headers = "From: " . strtoupper(session()->get('EMAIL_FROM')) . " <{$mailFrom}>\r\n";
+            $headers = "From: " . " <{$mailFrom}>\r\n";
             $headers .= "Reply-To: <{$mailFrom}>\r\n";
-            $headers .= "Sent-By: <{$mailFrom}>\r\n";
-            $headers .= "Signed-By: <{$mailFrom}>\r\n";
+            // $headers .= "Sent-By: <{$mailFrom}>\r\n";
+            // $headers .= "Signed-By: <{$mailFrom}>\r\n";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"";
 
@@ -123,6 +158,7 @@ class EmailController extends Controller
                 }
             }
             $body .= "--{$boundary}--";
+            dd($mailTo, $subject, $body, $headers);
             if (mail($mailTo, $subject, $body, $headers)) {
                 return true;
             } else {
@@ -138,6 +174,7 @@ class EmailController extends Controller
     {
         $request->validate([
             'template' => 'required|string',
+            'email' => 'required|string',
         ]);
 
         EmailTemplate::updateOrCreate(
@@ -145,7 +182,8 @@ class EmailController extends Controller
                 'name' => 'base_template',
             ],
             [
-                'template' => $request->template ?? null
+                'template' => $request->template ?? null,
+                'email' => $request->email ?? null,
             ]
         );
 
