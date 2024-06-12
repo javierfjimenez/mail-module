@@ -70,9 +70,12 @@
             <label for="emailTo" class="form-label">Para: </label>
             <div class="flex-grow-1">
               <select class="select2 form-select w-100" id="email-to" name="emailTo" multiple>
+                @if (isset($contacts) && count($contacts) >= 1)
                 @foreach ($contacts as $contact)
                 <option value="{{ $contact->id }}">{{ $contact->email }}</option>
                 @endforeach
+                @endif
+
               </select>
             </div>
             <div>
@@ -85,9 +88,12 @@
             <div class="flex-grow-1">
               <!-- <input type="text" id="emailCC" class="form-control" placeholder="CC"/> -->
               <select class="select2 form-select w-100" id="emailCC" name="emailCC" multiple>
+                @if (isset($groups) && count($groups) >= 1)
                 @foreach ($groups as $group)
                 <option value="{{ $group->id }}">{{ $group->name }}</option>
                 @endforeach
+                @endif
+
               </select>
             </div>
             <a class="text-body toggle-cc" href="#"><i data-feather="x"></i></a>
@@ -97,9 +103,11 @@
             <div class="flex-grow-1">
               <!-- <input type="text" id="emailBCC" class="form-control" placeholder="BCC"/> -->
               <select class="select2 form-select w-100" id="emailBCC" name="emailBCC" multiple>
+                @if (isset($groups) && count($groups) >= 1)
                 @foreach ($groups as $group)
                 <option value="{{ $group->id }}">{{ $group->name }}</option>
                 @endforeach
+                @endif
               </select>
             </div>
             <a class="text-body toggle-bcc" href="#"><i data-feather="x"></i></a>

@@ -204,8 +204,6 @@
   .ecommerce-application .swiper-responsive-breakpoints.swiper-container .swiper-slide {
     padding: 1rem;
   }
-}
-@media (max-width: 767.98px) {
   .ecommerce-application .app-ecommerce-details .ratings-list-item svg,
 .ecommerce-application .app-ecommerce-details .ratings-list-item i {
     font-size: 1rem;

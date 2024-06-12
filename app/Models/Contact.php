@@ -9,12 +9,12 @@ class Contact extends Model
 {
     use HasFactory;
 
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email' , 'type','status'
+        'name', 'email', 'type', 'status'
     ];
 }
