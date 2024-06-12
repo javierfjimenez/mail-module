@@ -72,7 +72,7 @@
             </div>
             <div class="mb-1">
               <label class="form-label" for="basic-icon-default-contact">Contraseña</label>
-              <input type="password" class="form-control" placeholder="***********" name="password" />
+              <input type="password" id="basic-icon-default-contact" class="form-control" placeholder="***********" name="password" />
             </div>
             <div class="mb-1">
               <label class="form-label" for="user-status">Estatus</label>

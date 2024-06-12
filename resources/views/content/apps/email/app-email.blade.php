@@ -137,8 +137,8 @@
                       </div>
                       <div class="user-action">
                         <div class="form-check">
-                          <input type="checkbox" class="form-check-input" id="customCheck1" />
-                          <label class="form-check-label" for="customCheck1"></label>
+                          <input type="checkbox" class="form-check-input" id="customCheck1{{$message->getID()}}" />
+                          <label class="form-check-label" for="customCheck1"></label>|
                         </div>
                         <span class="email-favorite"><i data-feather="star"></i></span>
                       </div>

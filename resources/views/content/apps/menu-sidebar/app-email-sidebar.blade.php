@@ -67,7 +67,7 @@
       <div class="p-0 modal-body flex-grow-1">
         <form id="composeForm" class="compose-form" method="POST" action="{{url('/api/email/send')}}" enctype="multipart/form-data">
           <div class="compose-mail-form-field select2-primary">
-            <label for="emailTo" class="form-label">Para: </label>
+            <label for="email-to" class="form-label">Para: </label>
             <div class="flex-grow-1">
               <select class="select2 form-select w-100" id="email-to" name="emailTo" multiple>
                 @if (isset($contacts) && count($contacts) >= 1)

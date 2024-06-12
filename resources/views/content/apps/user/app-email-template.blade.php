@@ -54,7 +54,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="contact">Enviado por:</label>
-            <input type="text" name="email" class="form-control" placeholder="john@doe.com" value="{{$email}}">
+            <input type="text" id="contact" name="email" class="form-control" placeholder="john@doe.com" value="{{$email}}">
           </div>
         <div class="">
             <label class="form-label" for="ck-editor">Plantilla:</label>
