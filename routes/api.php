@@ -29,7 +29,6 @@ Route::get('groups/{id}', [UserController::class, 'getGroupByID'])->name('getGro
 Route::post('group/remove', [UserController::class, 'groupRemove'])->name('groupRemove');
 
 Route::post('email/template/store', [EmailController::class, 'emailTemplateStore'])->name('emailTemplateStore');
-Route::post('email/template', [UserController::class, 'emailTemplate'])->name('emailTemplate');
 Route::post('email/send', [EmailController::class, 'sendMail'])->name('sendMail');
 Route::get('get/mail/{uid}', [EmailController::class, 'getEmailByUid'])->name('getEmailByUid');
 
