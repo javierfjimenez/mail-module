@@ -28,7 +28,7 @@
                 </g>
               </g>
             </svg></span>
-          <h2 class="brand-text mb-0">Vuexy</h2>
+          <h2 class="mb-0 brand-text">Vuexy</h2>
         </a>
       </li>
     </ul>
@@ -56,7 +56,7 @@
               <div class="bookmark-input-icon">
                 <i data-feather="search"></i>
               </div>
-              <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">
+              <input id="search" class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">
               <ul class="search-list search-list-bookmark"></ul>
             </div>
           </li>
@@ -69,13 +69,13 @@
           <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
             <li class="dropdown-menu-header">
               <div class="dropdown-header d-flex">
-                <h4 class="notification-title mb-0 me-auto">My Cart</h4>
+                <h4 class="mb-0 notification-title me-auto">My Cart</h4>
                 <div class="badge rounded-pill badge-light-primary">4 Items</div>
               </div>
             </li>
             <li class="scrollable-container media-list">
               <div class="list-item align-items-center">
-                <img class="d-block rounded me-1" src="{{ asset('images/pages/eCommerce/1.png') }}" alt="donuts" width="62">
+                <img class="rounded d-block me-1" src="{{ asset('images/pages/eCommerce/1.png') }}" alt="donuts" width="62">
                 <div class="list-item-body flex-grow-1">
                   <i class="ficon cart-item-remove" data-feather="x"></i>
                   <div class="media-heading">
@@ -85,14 +85,14 @@
                   </div>
                   <div class="cart-item-qty">
                     <div class="input-group">
-                      <input class="touchspin-cart" type="number" value="1">
+                      <input id="number"  class="touchspin-cart" type="number" value="1">
                     </div>
                   </div>
                   <h5 class="cart-item-price">$374.90</h5>
                 </div>
               </div>
               <div class="list-item align-items-center">
-                <img class="d-block rounded me-1" src="{{ asset('images/pages/eCommerce/7.png') }}" alt="donuts" width="62">
+                <img class="rounded d-block me-1" src="{{ asset('images/pages/eCommerce/7.png') }}" alt="donuts" width="62">
                 <div class="list-item-body flex-grow-1">
                   <i class="ficon cart-item-remove" data-feather="x"></i>
                   <div class="media-heading">
@@ -102,14 +102,14 @@
                   </div>
                   <div class="cart-item-qty">
                     <div class="input-group">
-                      <input class="touchspin-cart" type="number" value="3">
+                      <input class="touchspin-cart" id="number2" type="number" value="3">
                     </div>
                   </div>
                   <h5 class="cart-item-price">$129.40</h5>
                 </div>
               </div>
               <div class="list-item align-items-center">
-                <img class="d-block rounded me-1" src="{{ asset('images/pages/eCommerce/2.png') }}" alt="donuts" width="62">
+                <img class="rounded d-block me-1" src="{{ asset('images/pages/eCommerce/2.png') }}" alt="donuts" width="62">
                 <div class="list-item-body flex-grow-1">
                   <i class="ficon cart-item-remove" data-feather="x"></i>
                   <div class="media-heading">
@@ -118,14 +118,14 @@
                   </div>
                   <div class="cart-item-qty">
                     <div class="input-group">
-                      <input class="touchspin-cart" type="number" value="2">
+                      <input class="touchspin-cart" id="number3" type="number" value="2">
                     </div>
                   </div>
                   <h5 class="cart-item-price">$699.00</h5>
                 </div>
               </div>
               <div class="list-item align-items-center">
-                <img class="d-block rounded me-1" src="{{ asset('images/pages/eCommerce/3.png') }}" alt="donuts" width="62">
+                <img class="rounded d-block me-1" src="{{ asset('images/pages/eCommerce/3.png') }}" alt="donuts" width="62">
                 <div class="list-item-body flex-grow-1">
                   <i class="ficon cart-item-remove" data-feather="x"></i>
                   <div class="media-heading">
@@ -135,14 +135,14 @@
                   </div>
                   <div class="cart-item-qty">
                     <div class="input-group">
-                      <input class="touchspin-cart" type="number" value="1">
+                      <input class="touchspin-cart" id="number4" type="number" value="1">
                     </div>
                   </div>
                   <h5 class="cart-item-price">$4,999.00</h5>
                 </div>
               </div>
               <div class="list-item align-items-center">
-                <img class="d-block rounded me-1" src="{{ asset('images/pages/eCommerce/5.png') }}" alt="donuts" width="62">
+                <img class="rounded d-block me-1" src="{{ asset('images/pages/eCommerce/5.png') }}" alt="donuts" width="62">
                 <div class="list-item-body flex-grow-1">
                   <i class="ficon cart-item-remove" data-feather="x"></i>
                   <div class="media-heading">
@@ -151,7 +151,7 @@
                   </div>
                   <div class="cart-item-qty">
                     <div class="input-group">
-                      <input class="touchspin-cart" type="number" value="1">
+                      <input class="touchspin-cart" id="number5" type="number" value="1">
                     </div>
                   </div>
                   <h5 class="cart-item-price">$2,999.00</h5>
@@ -159,9 +159,9 @@
               </div>
             </li>
             <li class="dropdown-menu-footer">
-              <div class="d-flex justify-content-between mb-1">
-                <h6 class="fw-bolder mb-0">Total:</h6>
-                <h6 class="text-primary fw-bolder mb-0">$10,999.00</h6>
+              <div class="mb-1 d-flex justify-content-between">
+                <h6 class="mb-0 fw-bolder">Total:</h6>
+                <h6 class="mb-0 text-primary fw-bolder">$10,999.00</h6>
               </div>
               <a class="btn btn-primary w-100" href="{{ url('app/ecommerce/checkout') }}">Checkout</a>
             </li>
@@ -175,7 +175,7 @@
           <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
             <li class="dropdown-menu-header">
               <div class="dropdown-header d-flex">
-                <h4 class="notification-title mb-0 me-auto">Notifications</h4>
+                <h4 class="mb-0 notification-title me-auto">Notifications</h4>
                 <div class="badge rounded-pill badge-light-primary">6 New</div>
               </div>
             </li>
@@ -220,7 +220,7 @@
                 </div>
               </a>
               <div class="list-item d-flex align-items-center">
-                <h6 class="fw-bolder me-auto mb-0">System Notifications</h6>
+                <h6 class="mb-0 fw-bolder me-auto">System Notifications</h6>
                 <div class="form-check form-check-primary form-switch">
                   <input class="form-check-input" id="systemNotification" type="checkbox" checked="">
                   <label class="form-check-label" for="systemNotification"></label>
@@ -313,7 +313,7 @@
   <ul class="main-search-list-defaultlist d-none">
     <li class="d-flex align-items-center">
       <a href="javascript:void(0);">
-        <h6 class="section-label mt-75 mb-0">Files</h6>
+        <h6 class="mb-0 section-label mt-75">Files</h6>
       </a>
     </li>
     <li class="auto-suggestion">
@@ -323,7 +323,7 @@
             <img src="{{ asset('images/icons/xls.png') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">Two new item submitted</p>
+            <p class="mb-0 search-data-title">Two new item submitted</p>
             <small class="text-muted">Marketing Manager</small>
           </div>
         </div>
@@ -337,7 +337,7 @@
             <img src="{{ asset('images/icons/jpg.png') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">52 JPG file Generated</p>
+            <p class="mb-0 search-data-title">52 JPG file Generated</p>
             <small class="text-muted">FontEnd Developer</small>
           </div>
         </div>
@@ -351,7 +351,7 @@
             <img src="{{ asset('images/icons/pdf.png') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">25 PDF File Uploaded</p>
+            <p class="mb-0 search-data-title">25 PDF File Uploaded</p>
             <small class="text-muted">Digital Marketing Manager</small>
           </div>
         </div>
@@ -365,7 +365,7 @@
             <img src="{{ asset('images/icons/doc.png') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">Anna_Strong.doc</p>
+            <p class="mb-0 search-data-title">Anna_Strong.doc</p>
             <small class="text-muted">Web Designer</small>
           </div>
         </div>
@@ -374,7 +374,7 @@
     </li>
     <li class="d-flex align-items-center">
       <a href="javascript:void(0);">
-        <h6 class="section-label mt-75 mb-0">Members</h6>
+        <h6 class="mb-0 section-label mt-75">Members</h6>
       </a>
     </li>
     <li class="auto-suggestion">
@@ -384,7 +384,7 @@
             <img src="{{ asset('images/portrait/small/avatar-s-8.jpg') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">John Doe</p>
+            <p class="mb-0 search-data-title">John Doe</p>
             <small class="text-muted">UI designer</small>
           </div>
         </div>
@@ -397,7 +397,7 @@
             <img src="{{ asset('images/portrait/small/avatar-s-1.jpg') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">Michal Clark</p>
+            <p class="mb-0 search-data-title">Michal Clark</p>
             <small class="text-muted">FontEnd Developer</small>
           </div>
         </div>
@@ -410,7 +410,7 @@
             <img src="{{ asset('images/portrait/small/avatar-s-14.jpg') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">Milena Gibson</p>
+            <p class="mb-0 search-data-title">Milena Gibson</p>
             <small class="text-muted">Digital Marketing Manager</small>
           </div>
         </div>
@@ -423,7 +423,7 @@
             <img src="{{ asset('images/portrait/small/avatar-s-6.jpg') }}" alt="png" height="32">
           </div>
           <div class="search-data">
-            <p class="search-data-title mb-0">Anna Strong</p>
+            <p class="mb-0 search-data-title">Anna Strong</p>
             <small class="text-muted">Web Designer</small>
           </div>
         </div>

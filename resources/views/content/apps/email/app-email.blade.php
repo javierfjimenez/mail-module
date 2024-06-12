@@ -125,6 +125,7 @@
     <ul class="email-media-list">
         @if($messages->count() > 0)
         @foreach($messages as $message)
+
                 {{-- <td>{{$message->getUid()}}</td>
                 <td>{{$message->getSubject()}}</td>
                 <td>{{$message->getFrom()[0]->mail}}</td>
@@ -137,8 +138,8 @@
                       </div>
                       <div class="user-action">
                         <div class="form-check">
-                          <input type="checkbox" class="form-check-input" id="customCheck1{{$message->getID()}}" />
-                          <label class="form-check-label" for="customCheck1{{$message->getID()}}"></label>|
+                          <input type="checkbox" class="form-check-input" id="customCheck1{{$message->getUid()}}" />
+                          <label class="form-check-label" for="customCheck1{{$message->getUid()}}"></label>|
                         </div>
                         <span class="email-favorite"><i data-feather="star"></i></span>
                       </div>
@@ -621,87 +622,6 @@
         </div>
       </div>
     </div>
-    {{-- <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header email-detail-head">
-            <div class="flex-wrap user-details d-flex justify-content-between align-items-center">
-              <div class="avatar me-75">
-                <img
-                  src="{{asset('images/portrait/small/avatar-s-9.jpg')}}"
-                  alt="avatar img holder"
-                  width="48"
-                  height="48"
-                />
-              </div>
-              <div class="mail-items">
-                <h5 class="mb-0">Carlos Williamson</h5>
-                <div class="email-info-dropup dropdown">
-                  <span
-                    role="button"
-                    class="dropdown-toggle font-small-3 text-muted"
-                    id="card_top01"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    carlos@gmail.com
-                  </span>
-                  <div class="dropdown-menu" aria-labelledby="card_top01">
-                    <table class="table table-sm table-borderless">
-                      <tbody>
-                        <tr>
-                          <td class="text-end">From:</td>
-                          <td>carlos@gmail.com</td>
-                        </tr>
-                        <tr>
-                          <td class="text-end">To:</td>
-                          <td>johndoe@ow.ly</td>
-                        </tr>
-                        <tr>
-                          <td class="text-end">Date:</td>
-                          <td>14:58, 29 Aug 2020</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mail-meta-item d-flex align-items-center">
-              <small class="mail-date-time text-muted">29 Aug, 2020, 14:58</small>
-              <div class="dropdown ms-50">
-                <div
-                  role="button"
-                  class="dropdown-toggle hide-arrow"
-                  id="email_more"
-                  data-bs-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i data-feather="more-vertical" class="font-medium-2"></i>
-                </div>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="email_more">
-                  <div class="dropdown-item"><i data-feather="corner-up-left" class="me-50"></i>Reply</div>
-                  <div class="dropdown-item"><i data-feather="corner-up-right" class="me-50"></i>Forward</div>
-                  <div class="dropdown-item"><i data-feather="trash-2" class="me-50"></i>Delete</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="pt-2 card-body mail-message-wrapper">
-            <div class="mail-message">
-              <p class="card-text">Hey John,</p>
-              <p class="card-text">
-                bah kivu decrete epanorthotic unnotched Argyroneta nonius veratrine preimaginary saunders demidolmen
-                Chaldaic allusiveness lorriker unworshipping ribaldish tableman hendiadys outwrest unendeavored
-                fulfillment scientifical Pianokoto Chelonia
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> --}}
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -879,7 +799,7 @@
             <div class="editor" data-placeholder="Type message..."></div>
             <div class="compose-editor-toolbar">
               <span class="ql-formats me-0">
-                <select class="ql-font">
+                <select id="ql-font" class="ql-font">
                   <option selected>Sailec Light</option>
                   <option value="sofia">Sofia Pro</option>
                   <option value="slabo">Slabo 27px</option>

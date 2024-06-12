@@ -156,7 +156,7 @@
             <div class="editor" data-placeholder="Type message..."></div>
             <div class="compose-editor-toolbar">
               <span class="ql-formats me-0">
-                <select class="ql-font">
+                <select id="ql-font" class="ql-font">
                   <option selected>Sailec Light</option>
                   <option value="sofia">Sofia Pro</option>
                   <option value="slabo">Slabo 27px</option>
