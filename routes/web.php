@@ -43,6 +43,7 @@ Route::get('authenticate', [AuthenticationController::class, 'authenticate'])->n
 Route::middleware(['auth'])->group(function () {
 Route::get('/', [EmailController::class, 'getNewEmails'])->name('getNewEmails');
 Route::get('get/seen/emails', [EmailController::class, 'seenEmails'])->name('seenEmails');
+Route::get('get/sent/emails', [EmailController::class, 'sentEmails'])->name('sentEmails');
 Route::get('get/deleted/emails', [EmailController::class, 'deletedEmails'])->name('deletedEmails');
 
 Route::get('users', [UserController::class, 'index'])->name('index');

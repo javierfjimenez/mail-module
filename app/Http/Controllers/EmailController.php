@@ -35,7 +35,28 @@ class EmailController extends Controller
     public function seenEmails()
     {
         try {
-            $messages = $this->imapService->getSeenEmails();
+            $messages = $this->imapService->getSentEmails();
+        } catch (\Throwable $th) {
+            Log::error('Error fetching new emails: ' . $th->getMessage());
+            return response()->view('errors.custom', [], 500);
+        }
+
+        $pageConfigs = [
+            'pageHeader' => false,
+            'contentLayout' => "content-left-sidebar",
+            'pageClass' => 'email-application',
+        ];
+
+        return view('/content/apps/email/app-email', [
+            'pageConfigs' => $pageConfigs,
+            'messages' => $messages,
+            'messagesCount' => $this->messagesCount
+        ]);
+    }
+    public function sentEmails()
+    {
+        try {
+            $messages = $this->imapService->getSentEmails();
         } catch (\Throwable $th) {
             Log::error('Error fetching new emails: ' . $th->getMessage());
             return response()->view('errors.custom', [], 500);

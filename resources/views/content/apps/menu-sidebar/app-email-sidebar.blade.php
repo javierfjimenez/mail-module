@@ -12,12 +12,16 @@
           <span class="align-middle">Bandeja de entrada</span>
           <span class="badge badge-light-primary rounded-pill float-end">{{$messagesCount['unseen'] ?? 0}} </span>
         </a>
-        <a href="{{ url('get/seen/emails') }}" class="list-group-item list-group-item-action">
+        <a href="{{ url('get/seen/emails') }}" class="list-group-item list-group-item-action @if(Request::url() === url('get/seen/emails')) active @endif">
           <i data-feather="send" class="font-medium-3 me-50"></i>
           <span class="align-middle">Leídos</span>
           <span class="badge badge-light-primary rounded-pill float-end">{{$messagesCount['seen'] ?? 0}}</span>
-
         </a>
+        <a href="{{ url('get/sent/emails') }}" class="list-group-item list-group-item-action @if(Request::url() === url('get/sent/emails')) active @endif">
+            <i data-feather="send" class="font-medium-3 me-50"></i>
+            <span class="align-middle">Enviados</span>
+            <span class="badge badge-light-primary rounded-pill float-end">{{$messagesCount['seen'] ?? 0}}</span>
+          </a>
         <a href="#" class="list-group-item list-group-item-action">
           <i data-feather="star" class="font-medium-3 me-50"></i>
           <span class="align-middle">Borradores</span>
