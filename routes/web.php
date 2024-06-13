@@ -40,7 +40,7 @@ Route::get('authenticate', [AuthenticationController::class, 'authenticate'])->n
 //     Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
 // });
 /* Route Dashboards */
-//Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 Route::get('/', [EmailController::class, 'getNewEmails'])->name('getNewEmails');
 Route::get('get/seen/emails', [EmailController::class, 'seenEmails'])->name('seenEmails');
 Route::get('get/deleted/emails', [EmailController::class, 'deletedEmails'])->name('deletedEmails');
@@ -55,10 +55,7 @@ Route::get('logout', [AuthenticationController::class, 'destroy']);
 Route::get('/ckbox/token', [AuthenticationController::class, 'token'])->name('ckbox_token');
 Route::get('email/temp', [UserController::class, 'emailTemplate'])->name('emailTemplate');
 
-
-//});
-
-
+});
 
 Route::middleware([
     'auth:sanctum',
