@@ -82,14 +82,14 @@ class EmailController extends Controller
         try {
             $message = $this->imapService->getEmailByUid($uid);
 
-            $message->getAttachments()->each(function ($attachment) use ($message) {
-                $fp = fopen(storage_path('attachments/') . $attachment->name, "wb");
-                file_put_contents(storage_path('attachments/' . $attachment->name), $attachment->content);
-                $content = file_get_contents(storage_path('attachments/' . $attachment->name));
-                $file = "data:file/pdf;base64," . base64_encode($content);
-                dd($file);
-                fclose($fp);
-            });
+            // $message->getAttachments()->each(function ($attachment) use ($message) {
+            //     $fp = fopen(storage_path('attachments/') . $attachment->name, "wb");
+            //     file_put_contents(storage_path('attachments/' . $attachment->name), $attachment->content);
+            //     $content = file_get_contents(storage_path('attachments/' . $attachment->name));
+            //     $file = "data:file/pdf;base64," . base64_encode($content);
+            //     dd($file);
+            //     fclose($fp);
+            // });
             $data = [
                 'subject' => $message->getSubject(),
                 'from' => ['personal' => $message->getFrom()[0]->personal, 'mail' => $message->getFrom()[0]->mail],
@@ -98,7 +98,7 @@ class EmailController extends Controller
                 'body' => $message->getHTMLBody(),
                 'attachments' => ['count' => $message->getAttachments()->count(), 'files' => $message->getAttachments()]
             ];
-            // $message->setFlag('SEEN');
+            $message->setFlag('SEEN');
             return response()->json(['success' => true, 'data' => $data], 200);
         } catch (\Throwable $th) {
             Log::error('Error fetching email by UID: ' . $th->getMessage());
