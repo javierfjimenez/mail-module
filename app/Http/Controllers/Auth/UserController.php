@@ -52,48 +52,81 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    // public function userStore(Request $request)
+    // {
+    //     // Validación de entrada
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255|unique:users,email,' . $request->user_id,
+    //         'password' => 'nullable|string|min:5',
+    //     ]);
+
+    //     // Envolver en una transacción para asegurar la consistencia de los datos
+    //     return DB::transaction(function () use ($request) {
+    //         if ($request->has('user_id') && !is_null($request->user_id)) {
+    //             // Actualizar usuario existente
+    //             $user = User::find($request->user_id);
+
+    //             if (!$user) {
+    //                 return response()->json(['success' => false, 'message' => 'User not found'], 404);
+    //             }
+
+    //             $user->name = $request->name;
+    //             $user->email = $request->email;
+    //             $user->status = (int)$request->status;
+
+    //             if ($request->filled('password')) {
+    //                 $user->password = Hash::make($request->password);
+    //             }
+
+    //             $user->save();
+
+    //             return response()->json(['success' => true, 'user' => $user], 200);
+    //         } else {
+    //             // Crear nuevo usuario
+    //             $user = User::create([
+    //                 'name' => $request->name,
+    //                 'email' => $request->email,
+    //                 'status' => (int)$request->status,
+    //                 'password' => Hash::make($request->password),
+    //             ]);
+
+    //             return response()->json(['success' => true, 'user' => $user], 201);
+    //         }
+    //     });
+    // }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function userStore(Request $request)
     {
-        // Validación de entrada
+        $user_id = $request->user_id ?? null;
+        if (isset($user_id)) {
+            $user = User::where('id', $user_id)->update(['name' => $request->name, 'email' => $request->email]);
+            if (isset($request->password))
+                User::where('id', $user_id)->update(['password' => $request->password]);
+            return response()->json(['success' => true, 'user' => $user]);
+        }
+        /*
+        Validation
+        */
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $request->user_id,
-            'password' => 'nullable|string|min:5',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5',
         ]);
-
-        // Envolver en una transacción para asegurar la consistencia de los datos
-        return DB::transaction(function () use ($request) {
-            if ($request->has('user_id') && !is_null($request->user_id)) {
-                // Actualizar usuario existente
-                $user = User::find($request->user_id);
-
-                if (!$user) {
-                    return response()->json(['success' => false, 'message' => 'User not found'], 404);
-                }
-
-                $user->name = $request->name;
-                $user->email = $request->email;
-                $user->status = (int)$request->status;
-
-                if ($request->filled('password')) {
-                    $user->password = Hash::make($request->password);
-                }
-
-                $user->save();
-
-                return response()->json(['success' => true, 'user' => $user], 200);
-            } else {
-                // Crear nuevo usuario
-                $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'status' => (int)$request->status,
-                    'password' => Hash::make($request->password),
-                ]);
-
-                return response()->json(['success' => true, 'user' => $user], 201);
-            }
-        });
+        $user = User::create(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]
+        );
+        return response()->json(['success' => true, 'user' => $user]);
     }
 
     // User List Page
