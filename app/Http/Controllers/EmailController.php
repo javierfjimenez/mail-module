@@ -130,12 +130,12 @@ class EmailController extends Controller
     {
         // Validar entrada
         $request->validate([
-            'emailTo' => 'required|email',
+            'emailTo' => 'required',
             'emailSubject' => 'required|string|max:255',
             'files.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx,zip'
         ]);
 
-        $mailTo = $request->input('mailTo');
+        $mailTo = Contact::where('id', $request->input('emailTo'))->first()->email ?? '';
         $subject = $request->input('emailSubject');
         $files = $request->file('files');
         if ($this->sendPhpMail($mailTo, $subject, $files))
@@ -150,7 +150,7 @@ class EmailController extends Controller
             $finalMessage = EmailTemplate::select('template')->first()->template ?? '';
             $boundary = md5(time()); // define boundary with a md5 hashed value
 
-            $headers = "From: " . " <{$mailFrom}>\r\n";
+            $headers = "From: <{$mailFrom}>\r\n";
             $headers .= "Reply-To: <{$mailFrom}>\r\n";
             // $headers .= "Sent-By: <{$mailFrom}>\r\n";
             // $headers .= "Signed-By: <{$mailFrom}>\r\n";
@@ -179,7 +179,7 @@ class EmailController extends Controller
                 }
             }
             $body .= "--{$boundary}--";
-            dd($mailTo, $subject, $body, $headers);
+            // dd($mailTo, $subject, $body, $headers);
             if (mail($mailTo, $subject, $body, $headers)) {
                 return true;
             } else {
