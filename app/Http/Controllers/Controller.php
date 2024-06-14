@@ -12,12 +12,44 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * The IMAP service instance.
+     *
+     * @var ImapService
+     */
     protected $imapService;
+
+    /**
+     * The count of messages.
+     *
+     * @var int
+     */
     protected $messagesCount;
+
+    /**
+     * The Contact model instance.
+     *
+     * @var Contact
+     */
     protected $contactModel;
+
+    /**
+     * The Group model instance.
+     *
+     * @var Group
+     */
     protected $groupModel;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param ImapService $imapService
+     * @param Contact $contactModel
+     * @param Group $groupModel
+     * @return void
+     */
     public function __construct(ImapService $imapService, Contact $contactModel, Group $groupModel)
     {
         $this->imapService = $imapService;

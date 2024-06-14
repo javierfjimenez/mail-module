@@ -130,20 +130,32 @@ class EmailController extends Controller
     {
         // Validar entrada
         $request->validate([
-            'emailTo' => 'required',
             'emailSubject' => 'required|string|max:255',
             'files.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx,zip'
         ]);
 
         $mailTo = Contact::where('id', $request->input('emailTo'))->first()->email ?? '';
+        $emailCC = $request->input('emailCC');
+        $emailBCC = $request->input('emailBCC');
+
+        $group = [];
+        if (isset($emailCC) || isset($emailBCC)) {
+            $roup_id = $emailBCC ?? $emailCC;
+            $records = Contact::select('email')->where('group_id', $roup_id)->get()->toArray() ?? [];
+            $data = [];
+            foreach ($records as $group) {
+                $data[] = $group['email'];
+            }
+            $group = isset($emailBCC) ? ['type' => 'BCC: ', 'emails' => $data] :  ['type' => 'CC: ', 'emails' => $data];
+        }
         $subject = $request->input('emailSubject');
         $files = $request->file('files');
-        if ($this->sendPhpMail($mailTo, $subject, $files))
+        if ($this->sendPhpMail($mailTo, $subject, $files, $group))
             return response()->json(true);
 
         return response()->json(false);
     }
-    private function sendPhpMail($mailTo, $subject, $files = [])
+    private function sendPhpMail($mailTo, $subject, $files = [], $group = [])
     {
         try {
             $mailFrom = EmailTemplate::select('email')->first()->email ?? '';
@@ -152,8 +164,9 @@ class EmailController extends Controller
 
             $headers = "From: <{$mailFrom}>\r\n";
             $headers .= "Reply-To: <{$mailFrom}>\r\n";
-            // $headers .= "Sent-By: <{$mailFrom}>\r\n";
-            // $headers .= "Signed-By: <{$mailFrom}>\r\n";
+            if (!empty($group))
+                $headers .= $group['type'] . implode(",", $group['emails']) . "\r\n";
+
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"";
 
@@ -163,7 +176,6 @@ class EmailController extends Controller
             $body .= $finalMessage . "\r\n\r\n";
             if (!empty($files)) {
                 for ($i = 0; $i < count($files); $i++) {
-                    $file_name = basename($files[$i]);
                     $file_size = filesize($files[$i]);
                     $file_type = $files[$i]->getClientMimeType();
                     $file_original_name = $files[$i]->getClientOriginalName();
@@ -179,8 +191,7 @@ class EmailController extends Controller
                 }
             }
             $body .= "--{$boundary}--";
-            // dd($mailTo, $subject, $body, $headers);
-            if (mail($mailTo, $subject, $body, $headers)) {
+            if (mail($mailTo ?? $group['emails'][0], $subject, $body, $headers)) {
                 return true;
             } else {
                 throw new \Exception('Mail function failed');
