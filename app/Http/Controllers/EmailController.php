@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class EmailController extends Controller
 {
@@ -128,6 +129,30 @@ class EmailController extends Controller
     }
     public function sendMail(Request $request)
     {
+
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'devsuscription@gmail.com';
+            $mail->Password   = 'crfobwsqpocyqmjl';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            $mail->setFrom('devsuscription@gmail.com', 'Mailer');
+            $mail->addAddress('javier.jj132@gmail.com', 'Joe User');
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Here is the subject';
+            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+        } catch (\Exception $e) {
+            Log::error("Error sending con SMT: " . $e->getMessage());
+        }
         // Validar entrada
         $request->validate([
             'emailSubject' => 'required|string|max:255',

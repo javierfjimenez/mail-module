@@ -13,7 +13,7 @@ $configData = Helper::applClasses();
 
 @section('content')
 <div class="auth-wrapper auth-cover">
-  <div class="auth-inner row m-0">
+  <div class="m-0 auth-inner row">
     <!-- Brand logo-->
     <a class="brand-logo" href="#">
       <svg viewBox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28">
@@ -44,8 +44,8 @@ $configData = Helper::applClasses();
     <!-- /Brand logo-->
 
     <!-- Left Text-->
-    <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
-      <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+    <div class="p-5 d-none d-lg-flex col-lg-8 align-items-center">
+      <div class="px-5 w-100 d-lg-flex align-items-center justify-content-center">
         @if($configData['theme'] === 'dark')
           <img class="img-fluid" src="{{asset('images/pages/login-v2-dark.svg')}}" alt="Login V2" />
           @else
@@ -56,11 +56,11 @@ $configData = Helper::applClasses();
     <!-- /Left Text-->
 
     <!-- Login-->
-    <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
-      <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-        <h2 class="card-title fw-bold mb-1">Bienvenido! 👋</h2>
-        <p class="card-text mb-2">Inicia sesión e inicia una jornada productiva.</p>
-        <form class="auth-login-form mt-2" action="{{url('authenticate')}}" method="GET">
+    <div class="px-2 d-flex col-lg-4 align-items-center auth-bg p-lg-5">
+      <div class="mx-auto col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2">
+        <h2 class="mb-1 card-title fw-bold">Bienvenido! 👋</h2>
+        {{-- <p class="mb-2 card-text">Inicia sesión e inicia una jornada productiva.</p> --}}
+        <form class="mt-2 auth-login-form" action="{{url('authenticate')}}" method="GET">
           <div class="mb-1">
             <label class="form-label" for="email">Correo</label>
             <input class="form-control" id="email" type="text" name="email" placeholder="john@example.com" aria-describedby="login-email" autofocus="" tabindex="1" />
@@ -74,7 +74,7 @@ $configData = Helper::applClasses();
             </div>
             <div class="input-group input-group-merge form-password-toggle">
               <input class="form-control form-control-merge" id="password" type="password" name="password" placeholder="············" aria-describedby="login-password" tabindex="2" />
-              <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+              <span class="cursor-pointer input-group-text"><i data-feather="eye"></i></span>
             </div>
           </div>
           <div class="mb-1">
@@ -85,11 +85,11 @@ $configData = Helper::applClasses();
           </div>
           <button class="btn btn-primary w-100" tabindex="4">Iniciar sesión</button>
         </form>
-        <!-- <p class="text-center mt-2">
+        <!-- <p class="mt-2 text-center">
           <span>New on our platform?</span>
           <a href="{{url('auth/register-cover')}}"><span>&nbsp;Create an account</span></a>
         </p> -->
-        <!-- <div class="divider my-2">
+        <!-- <div class="my-2 divider">
           <div class="divider-text">or</div>
         </div> -->
         <!-- <div class="auth-footer-btn d-flex justify-content-center">
