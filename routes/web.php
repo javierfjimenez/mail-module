@@ -17,6 +17,8 @@ use App\Http\Controllers\MiscellaneousController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
 use App\Http\Controllers\EmailController;
+use App\Mail\EmergencyCallReceived;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,12 +60,8 @@ Route::get('email/temp', [UserController::class, 'emailTemplate'])->name('emailT
 
 // });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::get('/mail', function () {
+   Mail::to('javier.jj132@gmil.com')->send(new EmergencyCallReceived());
+
 });
+
